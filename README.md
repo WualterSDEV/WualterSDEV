@@ -19,7 +19,6 @@
     <img src="https://img.shields.io/badge/🇪🇸-ESPAÑOL-FF7043?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Español" />
   </a>
 </div>
-
 ---
 
 <!-- ENGLISH SECTION (MAIN) -->
