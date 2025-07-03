@@ -10,15 +10,15 @@
   <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="600">
 </div>
 
-<!-- SELECTOR DE IDIOMA GAMING -->
+<!-- SELECTOR DE IDIOMA CON ESPACIO -->
 <div align="center">
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
   <a href="#english">
-    <img src="https://img.shields.io/badge/🎮ENGLISH-00D9FF?style=for-the-badge&logo=gamepad&logoColor=white&labelColor=0A0A0A&color=00D9FF" alt="English" />
+    <img src="https://img.shields.io/badge/🔸%20ENGLISH-00D9FF?style=for-the-badge&logo=translate&logoColor=white&labelColor=0A0A0A&color=00D9FF" alt="English" />
   </a>
-  <span>&nbsp;&nbsp;💎&nbsp;&nbsp;</span>
+  <span>&nbsp;&nbsp;✨&nbsp;&nbsp;</span>
   <a href="#spanish">
-    <img src="https://img.shields.io/badge/🎮ESPAÑOL-FF6B6B?style=for-the-badge&logo=gamepad&logoColor=white&labelColor=0A0A0A&color=FF6B6B" alt="Español" />
+    <img src="https://img.shields.io/badge/🔸%20ESPAÑOL-FF6B6B?style=for-the-badge&logo=translate&logoColor=white&labelColor=0A0A0A&color=FF6B6B" alt="Español" />
   </a>
 </div>
 
