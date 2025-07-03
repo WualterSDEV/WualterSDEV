@@ -13,12 +13,15 @@
 <!-- SELECTOR DE IDIOMA MEJORADO -->
 <div align="center">
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
-  <a href="#english">
-    <img src="https://img.shields.io/badge/ENGLISH-00D9FF?style=flat&logo=google-translate&logoColor=white&color=5A88FF" alt="English" />
+  <a href="#english" style="text-decoration: none; margin-right: 10px;">
+    <button style="background-color: #5A88FF; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer;">
+      ENGLISH
+    </button>
   </a>
-  <span>&nbsp;&nbsp;</span>
-  <a href="#spanish">
-    <img src="https://img.shields.io/badge/ESPAÑOL-00D9FF?style=flat&logo=google-translate&logoColor=white&color=5A88FF" alt="Español" />
+  <a href="#spanish" style="text-decoration: none;">
+    <button style="background-color: #5A88FF; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer;">
+      ESPAÑOL
+    </button>
   </a>
 </div>
 
