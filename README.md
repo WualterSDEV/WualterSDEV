@@ -10,15 +10,15 @@
   <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="600">
 </div>
 
-<!-- SELECTOR DE IDIOMA CON BANDERAS -->
+<!-- USANDO BADGEN.NET -->
 <div align="center">
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
-  <a href="#english" style="display: inline-block;">
-    <img src="https://img.shields.io/badge/🇺🇸-ENGLISH-00D9FF?style=flat-square" alt="English" />
+  <a href="#english">
+    <img src="https://badgen.net/badge/🇺🇸/ENGLISH/00D9FF?labelColor=000" alt="English" />
   </a>
-  <div style="display:inline-block; width: 20px; background-color: #ccc;"></div> <!-- Color de separación -->
-  <a href="#spanish" style="display: inline-block;">
-    <img src="https://img.shields.io/badge/🇪🇸-ESPAÑOL-FF6B6B?style=flat-square" alt="Español" />
+  <span>&nbsp;&nbsp;✨&nbsp;&nbsp;</span>
+  <a href="#spanish">
+    <img src="https://badgen.net/badge/🇪🇸/ESPAÑOL/FF6B6B?labelColor=000" alt="Español" />
   </a>
 </div>
 
