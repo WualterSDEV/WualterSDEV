@@ -13,11 +13,11 @@
 <!-- SELECTOR DE IDIOMA CON BANDERAS -->
 <div align="center">
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
-  <a href="#english">
+  <a href="#english" style="display: inline-block;">
     <img src="https://img.shields.io/badge/🇺🇸-ENGLISH-00D9FF?style=flat-square" alt="English" />
   </a>
   <div style="display:inline-block; width: 20px; background-color: #ccc;"></div> <!-- Color de separación -->
-  <a href="#spanish">
+  <a href="#spanish" style="display: inline-block;">
     <img src="https://img.shields.io/badge/🇪🇸-ESPAÑOL-FF6B6B?style=flat-square" alt="Español" />
   </a>
 </div>
