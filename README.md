@@ -16,7 +16,7 @@
   <a href="#english">
     <img src="https://img.shields.io/badge/ENGLISH-00D9FF?style=flat&logo=google-translate&logoColor=white&color=5A88FF" alt="English" />
   </a>
-  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <span>&nbsp;&nbsp;</span>
   <a href="#spanish">
     <img src="https://img.shields.io/badge/ESPAÑOL-00D9FF?style=flat&logo=google-translate&logoColor=white&color=5A88FF" alt="Español" />
   </a>
