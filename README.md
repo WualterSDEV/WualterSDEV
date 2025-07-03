@@ -14,8 +14,6 @@
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
   <a href="#english" style="display: inline-block; margin-right: 10px;">
     <img src="https://img.shields.io/badge/🇺🇸-ENGLISH-4CAF50?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="English" />
-  </a>
-  </a>
 </a>
   <a href="#spanish" style="display: inline-block;">
     <img src="https://img.shields.io/badge/🇪🇸-ESPAÑOL-FF7043?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Español" />
