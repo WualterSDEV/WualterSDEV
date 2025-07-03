@@ -15,7 +15,7 @@
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
   <p>
     <a href="#english">
-      <strong>🇺🇸 ENGLISH</strong>
+      <strong>🇺🇸 ENGLISHxdxddxdd</strong>
     </a>
     &nbsp;&nbsp;|&nbsp;&nbsp;
     <a href="#spanish">
