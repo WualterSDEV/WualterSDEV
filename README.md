@@ -13,13 +13,12 @@
 <div align="center">
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
   <a href="#english" style="display: inline-block; margin-right: 10px;">
-    <img src="https://img.shields.io/badge/🇺🇸-ENGLISH-00D9FF?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="English" />
+    <img src="https://img.shields.io/badge/🇺🇸-ENGLISH-4CAF50?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="English" />
   </a>
   <a href="#spanish" style="display: inline-block;">
-    <img src="https://img.shields.io/badge/🇪🇸-ESPAÑOL-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Español" />
+    <img src="https://img.shields.io/badge/🇪🇸-ESPAÑOL-FF7043?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Español" />
   </a>
 </div>
-
 
 ---
 
