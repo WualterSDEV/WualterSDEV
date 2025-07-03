@@ -10,15 +10,15 @@
   <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="600">
 </div>
 
-<!-- SELECTOR DE IDIOMA MEJORADO -->
+<!-- SELECTOR DE IDIOMA MEJORADO - OPCIÓN 1 -->
 <div align="center">
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
   <a href="#english">
-    <img src="https://img.shields.io/badge/ENGLISH-00D9FF?style=flat&logo=google-translate&logoColor=white&color=5A88FF" alt="English" />
+    <img src="https://img.shields.io/badge/🇺🇸_ENGLISH-00D9FF?style=for-the-badge&logo=google-translate&logoColor=white&labelColor=1a1a1a&color=gradient" alt="English" />
   </a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="#spanish">
-    <img src="https://img.shields.io/badge/ESPAÑOL-00D9FF?style=flat&logo=google-translate&logoColor=white&color=5A88FF" alt="Español" />
+    <img src="https://img.shields.io/badge/🇪🇸_ESPAÑOL-FF6B6B?style=for-the-badge&logo=google-translate&logoColor=white&labelColor=1a1a1a&color=gradient" alt="Español" />
   </a>
 </div>
 
