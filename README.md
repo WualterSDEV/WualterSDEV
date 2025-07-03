@@ -20,6 +20,7 @@
   <a href="#spanish">
     <img src="https://img.shields.io/badge/ESPAÑOL-00D9FF?style=for-the-badge&logo=google-translate&logoColor=white" alt="Español" />
   </a>
+  <p><strong>👇 Click on your preferred language / Haz clic en tu idioma preferido 👇</strong></p>
 </div>
 
 ---
