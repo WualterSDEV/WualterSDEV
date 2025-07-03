@@ -10,15 +10,15 @@
   <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="600">
 </div>
 
-<!-- USANDO BADGEN.NET -->
+<!-- BOTONES CON ICONOS SVG -->
 <div align="center">
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
   <a href="#english">
-    <img src="https://badgen.net/badge/🇺🇸/ENGLISH/00D9FF?labelColor=000" alt="English" />
+    <img src="https://img.shields.io/badge/EN-ENGLISH-00D9FF?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K&logoColor=white&labelColor=0a0a0a" alt="English" />
   </a>
   <span>&nbsp;&nbsp;✨&nbsp;&nbsp;</span>
   <a href="#spanish">
-    <img src="https://badgen.net/badge/🇪🇸/ESPAÑOL/FF6B6B?labelColor=000" alt="Español" />
+    <img src="https://img.shields.io/badge/ES-ESPAÑOL-FF6B6B?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K&logoColor=white&labelColor=0a0a0a" alt="Español" />
   </a>
 </div>
 
