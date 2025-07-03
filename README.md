@@ -10,21 +10,16 @@
   <img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="600">
 </div>
 
-<!-- BOTONES PERSONALIZADOS CON HTML -->
+<!-- USANDO BADGEN.NET -->
 <div align="center">
   <h2>🌍 LANGUAGE SELECTOR / SELECTOR DE IDIOMA</h2>
-  <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
-    <a href="#english" style="text-decoration: none;">
-      <div style="background: linear-gradient(45deg, #00D9FF, #0099CC); padding: 12px 24px; border-radius: 8px; color: white; font-weight: bold; font-family: 'Segoe UI', Arial, sans-serif; box-shadow: 0 4px 15px rgba(0,217,255,0.3); border: none; cursor: pointer; transition: all 0.3s ease;">
-        🇺🇸 ENGLISH
-      </div>
-    </a>
-    <a href="#spanish" style="text-decoration: none;">
-      <div style="background: linear-gradient(45deg, #FF6B6B, #CC5555); padding: 12px 24px; border-radius: 8px; color: white; font-weight: bold; font-family: 'Segoe UI', Arial, sans-serif; box-shadow: 0 4px 15px rgba(255,107,107,0.3); border: none; cursor: pointer; transition: all 0.3s ease;">
-        🇪🇸 ESPAÑOL
-      </div>
-    </a>
-  </div>
+  <a href="#english">
+    <img src="https://badgen.net/badge/🇺🇸/ENGLISH/00D9FF?labelColor=000" alt="English" />
+  </a>
+  <span>&nbsp;&nbsp;✨&nbsp;&nbsp;</span>
+  <a href="#spanish">
+    <img src="https://badgen.net/badge/🇪🇸/ESPAÑOL/FF6B6B?labelColor=000" alt="Español" />
+  </a>
 </div>
 
 ---
