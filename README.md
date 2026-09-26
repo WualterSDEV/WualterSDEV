@@ -47,6 +47,10 @@
 > *Calcula cientos de mercados por partido, los compara contra la cuota de la casa y registra si acertaste.*
 
 <p>
+  <a href="https://app-z8g3.onrender.com/"><img src="https://img.shields.io/badge/▶_Probar_la_app-FF5A1F?style=for-the-badge&labelColor=0F1420" alt="Probar la app"/></a>
+</p>
+
+<p>
   <img src="https://img.shields.io/badge/Python_3.11-3776AB?style=flat-square&logo=python&logoColor=white"/>
   <img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white"/>
   <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white"/>
@@ -67,7 +71,7 @@
 | 💳 **Negocio** | Plan gratis / Pro controlado en el servidor, cobro por Yape o Plin y Libro de Reclamaciones virtual |
 | 🛡️ **Calidad** | CI con pytest + Playwright en cada PR, persistencia en Postgres para sobrevivir reinicios, health check y arranque en segundo plano |
 
-<sub>~18 000 líneas de Python · ~4 500 de JavaScript sin frameworks · repositorio privado</sub>
+<sub>~18 000 líneas de Python · ~4 500 de JavaScript sin frameworks · código privado · 🔗 <a href="https://app-z8g3.onrender.com/">app-z8g3.onrender.com</a></sub>
 
 <br>
 
@@ -136,7 +140,7 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
 
 **Python developer from Cusco, Peru.** I build complete products: from the statistical model to the server, the UI, the tests and the billing.
 
-**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, and tracks calibration and yield for every saved pick. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as an installable PWA, with a Free/Pro plan and CI running pytest + Playwright on every PR.
+**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, and tracks calibration and yield for every saved pick. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as an installable PWA, with a Free/Pro plan and CI running pytest + Playwright on every PR. **[Try it live →](https://app-z8g3.onrender.com/)**
 
 **🏇 Umapyoi AutoReroll** — a desktop bot that automates rerolling in Umamusume Global using OpenCV and Tesseract OCR to detect target SSR cards, with Discord webhook notifications and an English/Spanish UI.
 
