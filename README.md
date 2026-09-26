@@ -21,22 +21,11 @@
 
 ## 👋 Sobre mí
 
-<table>
-  <tr>
-    <td width="60%" valign="top">
-
 - ⚽ Hoy trabajo en **Instrumento**, una app web que calcula cientos de mercados por partido de fútbol con modelos estadísticos reales y mide si aciertan.
 - 📐 Me interesa el **modelado estadístico aplicado**: Dixon-Coles, Binomial Negativa, cópulas, calibración y backtesting.
 - 🚀 Me gusta llevar las cosas **a producción**: despliegue en Render, base en Postgres, CI con GitHub Actions y pruebas de interfaz con Playwright.
 - 🤖 Empecé automatizando tareas repetitivas con **visión por computadora y OCR** (ver Umapyoi AutoReroll).
 - 🎮 Fuera del código: videojuegos y mucha música.
-
-  </td>
-    <td width="40%" align="center" valign="top">
-      <img src="https://spotify-github-profile.kittinanx.com/api/view.svg?uid=315y23hfxynyj3jvzsaimfrw5poy&cover_image=true&theme=default&show_offline=true&background_color=121212&interchange=false&bar_color=53b14f&bar_color_cover=true" width="320"/>
-    </td>
-  </tr>
-</table>
 
 ---
 
@@ -91,36 +80,25 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
 
 ## 🛠️ Stack
 
-<table>
-  <tr>
-    <td align="center"><b>Lenguajes</b></td>
-    <td><img src="https://skillicons.dev/icons?i=python,js,html,css,sql&theme=dark"/></td>
-  </tr>
-  <tr>
-    <td align="center"><b>Backend y datos</b></td>
-    <td><img src="https://skillicons.dev/icons?i=flask,postgres,sqlite&theme=dark"/>&nbsp;
-      <img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" height="40"/>
-      <img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" height="40"/>
-      <img src="https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white" height="40"/>
-    </td>
-  </tr>
-  <tr>
-    <td align="center"><b>Automatización</b></td>
-    <td>
-      <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" height="40"/>
-      <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" height="40"/>
-      <img src="https://img.shields.io/badge/Discord.py-5865F2?style=for-the-badge&logo=discord&logoColor=white" height="40"/>
-    </td>
-  </tr>
-  <tr>
-    <td align="center"><b>Deploy y calidad</b></td>
-    <td><img src="https://skillicons.dev/icons?i=git,github,githubactions,vscode&theme=dark"/>&nbsp;
-      <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black" height="40"/>
-      <img src="https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white" height="40"/>
-      <img src="https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" height="40"/>
-    </td>
-  </tr>
-</table>
+**Lenguajes**<br>
+<img src="https://skillicons.dev/icons?i=python,js,html,css,sql&theme=dark"/>
+
+**Backend y datos**<br>
+<img src="https://skillicons.dev/icons?i=flask,postgres,sqlite&theme=dark"/><br>
+<img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"/>
+<img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white"/>
+<img src="https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white"/>
+
+**Automatización**<br>
+<img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white"/>
+<img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white"/>
+<img src="https://img.shields.io/badge/Discord.py-5865F2?style=for-the-badge&logo=discord&logoColor=white"/>
+
+**Deploy y calidad**<br>
+<img src="https://skillicons.dev/icons?i=git,github,githubactions,vscode&theme=dark"/><br>
+<img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black"/>
+<img src="https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white"/>
+<img src="https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white"/>
 
 ---
 
