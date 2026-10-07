@@ -26,7 +26,7 @@ for rr in b + v:
 for r in b:
     if not r['nombre']: r['nombre'] = 'RB MASA HAMBURGUESA P' if r['codigo'] == '00171' else '(sin nombre) ' + r['codigo']
     f = r['factor'] if isinstance(r['factor'], (int, float)) else None
-    r['rinde'] = a_gramos(f, r['ucosto'], f)[0] if f is not None else None
+    r['rinde'], r['urinde'] = a_gramos(f, r['ucosto'], f) if f is not None else (None, None)
 
 ws = openpyxl.load_workbook(ODOO).active
 hdr = [c for c in ws[1]]
@@ -61,10 +61,12 @@ for j, h in enumerate(hdr, 1):
 for col, dim in ws.column_dimensions.items(): o.column_dimensions[col].width = dim.width
 row = 2
 for r, t in [(r, 'Base') for r in order] + [(r, 'Venta') for r in vsel]:
-    head = [odoo_ref(r['nombre']), r['nombre'], 'Fabricar este producto', 1 if t == 'Venta' else (r['rinde'] or 1)]
-    for k, it in enumerate(r['items'] or [None]):
-        line = [it['ucosto'], odoo_ref(it['insumo']), it['insumo'], it['cant']] if it else [None] * 4
-        for j, val in enumerate((head if k == 0 else [None] * 4) + line, 1):
+    # Fila de la receta: rinde y su unidad (ej. 72 PORCION); los insumos van en las filas de abajo
+    head = [odoo_ref(r['nombre']), r['nombre'], 'Fabricar este producto', 1 if t == 'Venta' else (r['rinde'] or 1),
+            'UNIDAD' if t == 'Venta' else (r['urinde'] or 'UNIDAD'), None, None, None]
+    lines = [head] + [[None] * 4 + [it['ucosto'], odoo_ref(it['insumo']), it['insumo'], it['cant']] for it in r['items']]
+    for line in lines:
+        for j, val in enumerate(line, 1):
             if isinstance(val, float) and val == int(val): val = int(val)
             o.cell(row, j, round(val, 4) if isinstance(val, float) else val)
         row += 1

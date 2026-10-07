@@ -205,8 +205,9 @@ function exportXlsx(ids) {
   const rows = [HEAD];
   list.forEach(r => {
     const qty = r.t === 'Venta' ? 1 : (r.f ?? 1);
-    if (!r.it.length) rows.push([r.oid || '', r.n, 'Fabricar este producto', qty, r.up || '', '', '', '']);
-    r.it.forEach((i, k) => rows.push([...(k ? ['', '', '', ''] : [r.oid || '', r.n, 'Fabricar este producto', qty]), i[3], i[7] || '', i[0], i[2]]));
+    // Fila de la receta con su rinde y unidad (ej. 72 PORCION); los insumos van debajo
+    rows.push([r.oid || '', r.n, 'Fabricar este producto', qty, r.t === 'Venta' ? 'UNIDAD' : (r.up || 'UNIDAD'), '', '', '']);
+    r.it.forEach(i => rows.push(['', '', '', '', i[3], i[7] || '', i[0], i[2]]));
   });
   const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(rows);
   ws['!cols'] = [11, 36, 22, 10, 13, 14, 40, 10].map(w => ({wch: w}));
