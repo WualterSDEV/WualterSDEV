@@ -76,7 +76,7 @@ mark{background:var(--hl);color:inherit}
 <body>
 <header>
   <h1>Buscador de Recetas</h1>
-  <p>Inforest 2026 · <span id="tot"></span> recetas · funciona sin internet</p>
+  <p>Inforest 2026 · <span id="tot"></span> recetas · Excel en formato Odoo, en gramos · funciona sin internet</p>
   <button class="theme" id="theme" title="Cambiar tema">◐ Tema</button>
 </header>
 <main>
@@ -159,7 +159,7 @@ function itemsTable(r, depth, seen) {
     const name = sub && depth < 6 && !seen.has(sub.id)
       ? `<details><summary>${esc(i[0])}</summary><div class="nest">${itemsTable(sub, depth + 1, new Set([...seen, sub.id]))}<div class="meta">Rinde: ${num(sub.f)} ${esc(sub.up || '')} · Costo: S/ ${num(sub.costo)}</div></div></details>`
       : esc(i[0]) + (i[1] === 'Receta' && !sub ? ' <span class="tag">sin receta en Inforest</span>' : '');
-    return `<tr><td>${name}</td><td>${esc(i[1])}</td><td class="n">${num(i[2], 4)}</td><td>${esc(i[3])}</td><td class="n">${num(i[4])}</td><td class="n">${num(i[5], 4)}</td></tr>`;
+    return `<tr><td>${name}${i[7] ? ` <span class="tag">${esc(i[7])}</span>` : ' <span class="tag c">sin código Odoo</span>'}</td><td>${esc(i[1])}</td><td class="n">${num(i[2], 4)}</td><td>${esc(i[3])}</td><td class="n">${num(i[4])}</td><td class="n">${num(i[5], 4)}</td></tr>`;
   }).join('');
   return `<div class="tbl"><table><thead><tr><th>Insumo</th><th>Tipo</th><th class="n">Cantidad</th><th>Unidad</th><th class="n">Precio</th><th class="n">Subtotal</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
@@ -168,7 +168,7 @@ function renderPreview() {
   $('#preview').innerHTML = `<div class="rec-h"><div><h3>${esc(r.n)}</h3>
     <div class="meta">${r.t === 'Venta' ? 'Receta de venta' : 'Receta base'} · Código ${esc(r.cod)} · ${esc(r.cat)} · ${esc(r.area)}
     ${r.carta ? `<br>En carta: <b>${esc(r.carta[1])}</b> (${esc(r.carta[0])}, S/ ${num(r.carta[2])})` : ''}
-    ${r.pv ? `<br>Precio venta Inforest: S/ ${num(r.pv)}` : ''}${r.t === 'Base' ? `<br>Rinde: ${num(r.f)} ${esc(r.up || '')}` : ''} · Costo total: S/ ${num(r.costo)}</div></div>
+    ${r.pv ? `<br>Precio venta Inforest: S/ ${num(r.pv)}` : ''}${r.t === 'Base' ? `<br>Rinde: ${num(r.f)} ${esc(r.up || '')}` : ''}${r.oid ? ` · Código Odoo: <b>${esc(r.oid)}</b>` : ' · <span class="tag">sin código en Odoo</span>'} · Costo total: S/ ${num(r.costo)}</div></div>
     <div class="actions"><button class="btn sec" data-add="${r.id}">${sel.has(r.id) ? 'Quitar de la selección' : 'Agregar a la selección'}</button>
     <button class="btn" data-one="${r.id}">Excel solo de esta</button></div></div>
     ${itemsTable(r, 0, new Set([r.id]))}`;
@@ -189,42 +189,42 @@ $('#export').onclick = () => exportXlsx([...sel]);
 $('#theme').onclick = () => { const d = document.documentElement, cur = d.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); d.dataset.theme = cur === 'dark' ? 'light' : 'dark'; };
 
 function exportXlsx(ids) {
-  const recs = ids.map(id => BY[id]);
   const incBase = $('#incBase').checked;
-  // recetas base necesarias (recursivo), con "usada en"
-  const usedIn = new Map(), order = [];
-  const walk = (r, parent) => r.it.forEach(i => {
-    const s = i[6] && BY[i[6]]; if (!s || ids.includes(s.id)) return;
-    if (!usedIn.has(s.id)) { usedIn.set(s.id, new Set()); order.push(s.id); walk(s, s.n); }
+  // Orden para importar en Odoo: primero las recetas base (las más internas primero), luego las elegidas
+  const order = [], seen = new Set(), usedIn = new Map();
+  const visit = (r, parent) => r.it.forEach(i => {
+    const s = i[6] && BY[i[6]]; if (!s || s.id === r.id) return;
+    if (!usedIn.has(s.id)) usedIn.set(s.id, new Set());
     usedIn.get(s.id).add(parent);
+    if (seen.has(s.id)) return; seen.add(s.id); visit(s, s.n); order.push(s.id);
   });
-  recs.forEach(r => walk(r, r.n));
-  const H = ['Código', 'Receta', 'Tipo receta', 'Categoría', 'Área', 'Rinde', 'Unidad rinde', 'Precio venta (S/)', 'Costo total (S/)', 'Insumo', 'Tipo insumo', 'Cantidad', 'Unidad', 'Precio unit. (S/)', 'Subtotal (S/)', '¿Tiene receta base?'];
-  const rowsOf = (list, extra) => {
-    const out = [extra ? [...H, 'Usada en'] : H];
-    list.forEach(r => {
-      r.it.forEach((i, k) => {
-        const row = [r.cod, r.n, r.t, r.cat, r.area, r.t === 'Base' ? r.f : '', r.t === 'Base' ? r.up : '', k ? '' : (r.pv ?? ''), k ? '' : r.costo,
-          i[0], i[1], i[2], i[3], i[4], i[5], i[1] === 'Receta' ? (i[6] ? 'Sí' : 'No') : ''];
-        if (extra) row.push(k ? '' : [...usedIn.get(r.id)].join(', '));
-        out.push(row);
-      });
-      out.push([]);
+  ids.forEach(id => { seen.add(id); visit(BY[id], BY[id].n); });
+  const list = [...(incBase ? order.filter(id => !ids.includes(id)) : []), ...ids].map(id => BY[id]);
+  const HEAD = ['Producto/id', 'Producto/nombre', 'Tipo de lista de materiales', 'Cantidad', 'Unidad de medida',
+    'Líneas de la lista de materiales/Componente/Referencia interna', 'Líneas de la lista de materiales/Componente/Nombre', 'Líneas de la lista de materiales/Cantidad'];
+  const ok = [HEAD], pend = [HEAD], rev = [['Qué falta', 'Nombre', 'Usado en', 'Qué hacer']], revSeen = new Set();
+  const issue = (q, n, u, d) => { const k = q + '|' + n; if (revSeen.has(k)) { const row = rev.find(x => x[0] === q && x[1] === n); if (u && !row[2].split(', ').includes(u)) row[2] += (row[2] ? ', ' : '') + u; return; } revSeen.add(k); rev.push([q, n, u || '', d]); };
+  list.forEach(r => {
+    const qty = r.t === 'Venta' ? 1 : (r.f ?? 1);
+    const ready = r.oid && r.it.every(i => i[7]);
+    if (!r.oid) issue('Producto (receta) no existe en Odoo', r.n, '', `Crear el producto en Odoo y poner su código en la columna A de "Pendientes" (Inforest ${r.cod})`);
+    if (r.t === 'Base' && r.f == null) issue('Receta sin rinde en Inforest', r.n, '', 'Revisar la cantidad (columna D)');
+    const dest = ready ? ok : pend;
+    if (!r.it.length) dest.push([r.oid || '', r.n, 'Fabricar este producto', qty, r.up || '', '', '', '']);
+    r.it.forEach((i, k) => {
+      if (!i[7]) issue('Insumo sin código en Odoo', i[0], r.n, 'Crear o buscar el insumo en Odoo y poner su código en la columna F');
+      dest.push([...(k ? ['', '', '', ''] : [r.oid || '', r.n, 'Fabricar este producto', qty]), i[3], i[7] || '', i[0], i[2]]);
     });
-    return out;
-  };
+  });
   const wb = XLSX.utils.book_new();
-  const res = [['Código', 'Receta', 'Tipo', 'Categoría', 'Área', 'Plato en carta', 'Sección carta', 'Precio carta (S/)', 'Precio venta Inforest (S/)', 'Costo total (S/)', 'N° insumos']];
-  recs.forEach(r => res.push([r.cod, r.n, r.t, r.cat, r.area, r.carta ? r.carta[1] : '', r.carta ? r.carta[0] : '', r.carta ? r.carta[2] : '', r.pv ?? '', r.costo, r.it.length]));
-  if (incBase) { res.push([]); res.push(['Recetas base incluidas:', order.length]); }
-  const add = (aoa, name, widths) => { const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = widths.map(w => ({wch: w})); ws['!autofilter'] = {ref: XLSX.utils.encode_range({s: {r: 0, c: 0}, e: {r: aoa.length - 1, c: aoa[0].length - 1}})}; XLSX.utils.book_append_sheet(wb, ws, name); };
-  add(res, 'Resumen', [9, 36, 8, 32, 12, 30, 18, 12, 14, 12, 10]);
-  const W = [9, 34, 10, 30, 12, 9, 11, 12, 12, 38, 11, 10, 11, 12, 12, 12];
-  add(rowsOf(recs, false), 'Recetas', W);
-  if (incBase && order.length) add(rowsOf(order.map(id => BY[id]), true), 'Recetas Base', [...W, 40]);
+  const add = (aoa, name, widths) => { const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = widths.map(w => ({wch: w})); XLSX.utils.book_append_sheet(wb, ws, name); };
+  const W = [11, 36, 22, 10, 13, 14, 40, 10];
+  add(ok, 'Listo para subir', W);
+  if (pend.length > 1) add(pend, 'Pendientes', W);
+  if (rev.length > 1) add(rev, 'Revisar antes de subir', [34, 40, 50, 70]);
   const d = new Date(), ds = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-  const base = recs.length === 1 ? recs[0].n : `${recs.length}_recetas`;
-  XLSX.writeFile(wb, `Receta_${base.replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_|_$/g, '')}_${ds}.xlsx`);
+  const base = ids.length === 1 ? BY[ids[0]].n : `${ids.length}_recetas`;
+  XLSX.writeFile(wb, `Odoo_${base.replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_|_$/g, '')}_${ds}.xlsx`);
 }
 renderList(); renderSel();
 </script>

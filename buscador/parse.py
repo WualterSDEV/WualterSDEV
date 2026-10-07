@@ -4,6 +4,7 @@ def lab(vals, key, off=1):
     for i,v in enumerate(vals):
         if isinstance(v,str) and v.strip()==key:
             for w in vals[i+1:]:
+                if isinstance(w,str) and w.strip().endswith(':'): return None
                 if w!='' : return w
     return None
 def parse(path, kind):
@@ -16,7 +17,7 @@ def parse(path, kind):
             name = lab(raw,'Receta Base :' if kind=='base' else 'Receta Venta:')
             if kind=='base' and name in ('Usuario :',): name=''
             cur=dict(codigo=vals[1], nombre=(name or '').strip(), area=lab(raw,'Area de Producción :'),
-                     categoria=cat, unidad=lab(raw,'Unidad de Produc.:'), factor=lab(raw,'Factor :'),
+                     categoria=cat, unidad=lab(raw,'Unidad de Produc.:'), ucosto=lab(raw,'Unidad de Costo :'), factor=lab(raw,'Factor :'),
                      items=[], costo=None, venta=None)
             recs.append(cur)
         elif len(vals)==1 and isinstance(vals[0],str):
