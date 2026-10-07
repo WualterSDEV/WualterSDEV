@@ -1,120 +1,73 @@
-import sys, re, unicodedata, openpyxl
-from collections import Counter
+"""Recetas de Inforest (carta + postres + sus recetas base) en formato de importación de Odoo, en gramos.
+
+Uso:
+  python generar_odoo.py recetas_base.xls recetas_venta.xls recetas_odoo.xlsx cruce_carta.xlsx salida.xlsx
+"""
+import sys, os, re, unicodedata, openpyxl
 from copy import copy
-sys.path.insert(0, sys.argv[1])
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 from parse import parse; from norm import norm
-D, ODOO, CRUCE, OUT = sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
+if len(sys.argv) < 6: sys.exit(__doc__)
+BASE, VENTA, ODOO, CRUCE, OUT = sys.argv[1:6]
+
+def a_gramos(cant, unidad, factor=None):
+    if unidad in ('KILOS', 'LITROS'):
+        return (cant if factor == 1000.0 else (cant or 0) * 1000), ('GRAMOS' if unidad == 'KILOS' else 'MILILITROS')
+    return cant, unidad
 def key(s):
     s = unicodedata.normalize('NFKD', str(s)).encode('ascii', 'ignore').decode().upper()
     return ' '.join(re.sub(r'[^A-Z0-9()/ ]', ' ', s).split())
-b = parse(D+'/base.xls', 'base'); v = parse(D+'/venta.xls', 'venta')
-for rr in b+v:
-    for it in rr['items']:
-        if it['ucosto'] == 'KILOS' and it['factor'] == 1000.0: it['ucosto'] = 'GRAMOS'
-for r in b:
-    if not r['nombre']: r['nombre'] = 'RB MASA HAMBURGUESA P'
 
-ow = openpyxl.load_workbook(ODOO); ws = ow.active
+b = parse(BASE, 'base'); v = parse(VENTA, 'venta')
+for rr in b + v:
+    for it in rr['items']:
+        it['cant'], it['ucosto'] = a_gramos(it['cant'], it['ucosto'], it['factor'])
+for r in b:
+    if not r['nombre']: r['nombre'] = 'RB MASA HAMBURGUESA P' if r['codigo'] == '00171' else '(sin nombre) ' + r['codigo']
+    f = r['factor'] if isinstance(r['factor'], (int, float)) else None
+    r['rinde'] = a_gramos(f, r['ucosto'], f)[0] if f is not None else None
+
+ws = openpyxl.load_workbook(ODOO).active
 hdr = [c for c in ws[1]]
-print('tipos', Counter(r[2] for r in ws.iter_rows(min_row=2, values_only=True) if r[0]))
-ref = {}; used = set()        # nombre -> código Odoo
+ref, loose = {}, {}
 for r in ws.iter_rows(min_row=2, values_only=True):
-    if r[0]: ref.setdefault(key(r[1]), r[0]); used.add(r[0])
-    if r[5]: ref.setdefault(key(r[6]), r[5]); used.add(r[5])
-loose = {}
+    if r[0] and r[1]: ref.setdefault(key(r[1]), r[0])
+    if r[5] and r[6]: ref.setdefault(key(r[6]), r[5])
 for k, c in ref.items(): loose.setdefault((norm(k), k.startswith('RB '), k.startswith('(M')), set()).add(c)
 def odoo_ref(name):
     k = key(name)
-    if k in ref: return ref[k], 'exacto'
+    if k in ref: return ref[k]
     s = loose.get((norm(k), k.startswith('RB '), k.startswith('(M')))
-    if s and len(s) == 1: return next(iter(s)), 'parecido'
-    return None, None
+    return next(iter(s)) if s and len(s) == 1 else None
 
-# selección: carta + toda la pastelería + recetas base necesarias
-carta = set()
-x = openpyxl.load_workbook(CRUCE, data_only=True)['Cruce Carta']
-for row in x.iter_rows(min_row=2, values_only=True):
-    if row[3]: carta.add(row[3])
+carta = {row[3] for row in openpyxl.load_workbook(CRUCE, data_only=True)['Cruce Carta'].iter_rows(min_row=2, values_only=True) if row[3]}
 vsel = [r for r in v if r['codigo'] in carta or r['area'] == 'PASTELERIA']
 bidx = {}
 for r in b: bidx.setdefault(norm(r['nombre']), r)
-order = []; seen = set()
+order, seen = [], set()
 def visit(r):
     for it in r['items']:
-        if it['tipo'] == 'Receta':
-            s = bidx.get(norm(it['insumo']))
-            if s and s['codigo'] not in seen and s is not r:
-                seen.add(s['codigo']); visit(s); order.append(s)
+        s = bidx.get(norm(it['insumo'])) if it['tipo'] == 'Receta' else None
+        if s and s is not r and s['codigo'] not in seen:
+            seen.add(s['codigo']); visit(s); order.append(s)
 for r in [r for r in b if r['area'] == 'PASTELERIA'] + vsel: visit(r)
 for r in b:
     if r['area'] == 'PASTELERIA' and r['codigo'] not in seen: seen.add(r['codigo']); order.append(r)
-recs = [(r, 'Base') for r in order] + [(r, 'Venta') for r in vsel]
 
-out = openpyxl.Workbook(); out.remove(out.active)
-def mk(title):
-    sh = out.create_sheet(title)
-    for j, h in enumerate(hdr, 1):
-        c = sh.cell(1, j, h.value); c.font = copy(h.font); c.fill = copy(h.fill); c.alignment = copy(h.alignment); c.border = copy(h.border)
-    for col, dim in ws.column_dimensions.items(): sh.column_dimensions[col].width = dim.width
-    sh.freeze_panes = 'A2'; return sh
-ok_sh, pend_sh = mk('Listo para subir'), mk('Pendientes')
-pos = {ok_sh: 2, pend_sh: 2}
-parecidos = []
-from openpyxl.styles import PatternFill, Font
-from openpyxl.comments import Comment
-Y = PatternFill('solid', fgColor='FFEB9C'); R = PatternFill('solid', fgColor='FFC7CE')
-rv = out.create_sheet('Revisar antes de subir')
-for j, h in enumerate(['Qué', 'Nombre', 'Código sugerido', 'Usado en', 'Detalle'], 1): rv.cell(1, j, h).font = Font(bold=True)
-issues = []
-nuevos = {}
-for r, t in recs:
-    pid0, _ = odoo_ref(r['nombre'])
-    if not pid0: nuevos[r['nombre']] = ''
-ready = {}
-for r, t in recs:
-    pid0, _ = odoo_ref(r['nombre'])
-    ready[r['nombre']] = bool(pid0) and all(odoo_ref(it['insumo'])[0] for it in r['items'])
-for r, t in recs:
-    o = ok_sh if ready[r['nombre']] else pend_sh; rown = pos[o]
-    pid, how = odoo_ref(r['nombre'])
-    if not pid:
-        pid = None
-        issues.append(('Producto (receta) no existe en Odoo', r['nombre'], '', '', f"Receta {t.lower()} Inforest {r['codigo']}. Crear el producto en Odoo, poner su código en la columna A de 'Pendientes' y subirla"))
-    qty = 1.0 if t == 'Venta' else (r['factor'] or 1.0)
-    first = True
-    for it in r['items']:
-        cref, chow = odoo_ref(it['insumo'])
-        if not cref and it['insumo'] in nuevos: cref = nuevos[it['insumo']] or None; chow = 'nuevo'
-        vals = ([pid, r['nombre'], 'Fabricar este producto', qty] if first else [None]*4) + \
-               [it['ucosto'], cref, it['insumo'], round(it['cant'], 4) if isinstance(it['cant'], float) and it['cant'] != int(it['cant']) else int(it['cant'])]
-        for j, val in enumerate(vals, 1): o.cell(rown, j, val)
-        if first and how == 'parecido': parecidos.append((r['nombre'], pid))
-        if chow == 'parecido': parecidos.append((it['insumo'], cref))
-        if first and how != 'exacto' and how is not None:
-            o.cell(rown, 2).comment = Comment('Nombre en Odoo un poco distinto; código tomado por similitud', 'Claude')
-        if first and not how: o.cell(rown, 1).fill = Y
-        if not cref:
-            o.cell(rown, 6).fill = R
-            issues.append(('Insumo sin código en Odoo', it['insumo'], '', r['nombre'], 'Crear o buscar el código en Odoo y escribirlo en la columna F'))
-        elif chow == 'nuevo': o.cell(rown, 6).fill = Y
-        elif chow == 'parecido': o.cell(rown, 6).comment = Comment('Código tomado por nombre parecido en Odoo', 'Claude')
-        first = False; rown += 1
-    if not r['items']:
-        for j, val in enumerate([pid, r['nombre'], 'Fabricar este producto', qty], 1): o.cell(rown, j, val)
-        rown += 1
-    pos[o] = rown
-# agrupar insumos sin código
-agg = {}
-for q, n, s, u, d in issues:
-    k = (q, n)
-    if k in agg: agg[k][3].add(u)
-    else: agg[k] = [q, n, s, {u} if u else set(), d]
-for i, (q, n, s, u, d) in enumerate(sorted(agg.values(), key=lambda a: (a[0], a[1])), 2):
-    for j, val in enumerate([q, n, s, ', '.join(sorted(u)), d], 1): rv.cell(i, j, val)
-for col, w in zip('ABCDE', [34, 40, 14, 60, 70]): rv.column_dimensions[col].width = w
-out.move_sheet(rv, offset=0)
+out = openpyxl.Workbook(); o = out.active; o.title = ws.title
+for j, h in enumerate(hdr, 1):
+    c = o.cell(1, j, h.value); c.font = copy(h.font); c.fill = copy(h.fill); c.alignment = copy(h.alignment); c.border = copy(h.border)
+for col, dim in ws.column_dimensions.items(): o.column_dimensions[col].width = dim.width
+row = 2
+for r, t in [(r, 'Base') for r in order] + [(r, 'Venta') for r in vsel]:
+    head = [odoo_ref(r['nombre']), r['nombre'], 'Fabricar este producto', 1 if t == 'Venta' else (r['rinde'] or 1)]
+    for k, it in enumerate(r['items'] or [None]):
+        line = [it['ucosto'], odoo_ref(it['insumo']), it['insumo'], it['cant']] if it else [None] * 4
+        for j, val in enumerate((head if k == 0 else [None] * 4) + line, 1):
+            if isinstance(val, float) and val == int(val): val = int(val)
+            o.cell(row, j, round(val, 4) if isinstance(val, float) else val)
+        row += 1
+o.freeze_panes = 'A2'
 out.save(OUT)
-print('recetas', len(recs), 'listas', sum(ready.values()), 'pendientes', len(recs)-sum(ready.values()))
-print('parecidos', sorted(set(parecidos)))
-print(Counter(q for q, *_ in agg.values()))
-print('unidades', Counter(c.value for sh in (ok_sh, pend_sh) for c in sh['E'][1:]))
+print(f'{len(order) + len(vsel)} recetas ({len(order)} base, {len(vsel)} venta), {row - 2} filas -> {OUT}')
