@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="100%" src="img/banner.png" alt="WualterS · Desarrollador Python · Cusco, Perú"/>
+  <img width="100%" src="img/banner.gif" alt="WualterS · Desarrollador Python · Cusco, Perú"/>
 </div>
 
 <p align="center">
@@ -22,6 +22,8 @@
 - 🤖 Empecé automatizando tareas repetitivas con **visión por computadora y OCR** (ver Umapyoi AutoReroll).
 - 🔭 Ahora mismo: midiendo con datos reales si el xG, el CLV y las bajas de titulares mejoran los pronósticos.
 - 🎮 Fuera del código: videojuegos y mucha música.
+
+<img src="img/codigo.png" alt="class WualterS(Desarrollador)" width="100%"/>
 
 ---
 
@@ -101,6 +103,8 @@ flowchart LR
 
 ### 🏇 Umapyoi AutoReroll — automatización para Umamusume Global
 
+<img src="img/umapyoi.png" alt="Umapyoi AutoReroll" width="100%"/>
+
 Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el perfil, reclama recompensas, tira el gacha y **detecta las cartas SSR objetivo** con OpenCV + Tesseract OCR. Avisa por webhook de Discord e incluye interfaz en español e inglés.
 
 <p>
@@ -134,6 +138,16 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
 <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black"/>
 <img src="https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white"/>
 <img src="https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white"/>
+
+---
+
+## 🐍 Actividad
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/WualterSDEV/WualterSDEV/output/snake.svg" alt="La serpiente se come mis contribuciones" width="100%"/>
+  <br>
+  <sub>La serpiente se come mis contribuciones del año (se actualiza sola cada día).</sub>
+</div>
 
 ---
 
