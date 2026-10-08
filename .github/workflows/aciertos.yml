@@ -1,0 +1,33 @@
+# Redibuja la tarjeta «Aciertos en vivo» con los datos públicos de
+# Instrumento y la deja en la rama `datos` (la usa el README). Si la app no
+# responde, falla sin tocar la tarjeta anterior.
+name: aciertos
+
+on:
+  schedule:
+    - cron: "41 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["scripts/aciertos.py", ".github/workflows/aciertos.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  dibujar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/aciertos.py dist/aciertos.svg
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: datos
+          build_dir: dist
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -40,6 +40,10 @@
   <a href="https://instrumentoapp.com/aciertos"><img src="https://img.shields.io/badge/✅_Aciertos_públicos-C6F432?style=for-the-badge&labelColor=0F1420" alt="Aciertos públicos"/></a>
 </p>
 
+<a href="https://instrumentoapp.com/aciertos"><img src="https://raw.githubusercontent.com/WualterSDEV/WualterSDEV/datos/aciertos.svg" alt="Aciertos de Instrumento en vivo" width="100%"/></a>
+
+<sub>☝️ Datos reales de la app, se actualizan solos cada 6 horas. Cada pick se guarda antes del partido y cuentan también los que fallaron.</sub>
+
 <p>
   <img src="https://img.shields.io/badge/Python_3.11-3776AB?style=flat-square&logo=python&logoColor=white"/>
   <img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white"/>
