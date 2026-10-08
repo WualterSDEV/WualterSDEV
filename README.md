@@ -35,8 +35,11 @@
 
 > *Calcula cientos de mercados por partido, los compara contra la cuota de la casa y registra si acertaste.*
 
+<a href="https://instrumentoapp.com"><img src="img/hero.png" alt="Instrumento: pronósticos de fútbol con un modelo real" width="100%"/></a>
+
 <p>
-  <a href="https://app-z8g3.onrender.com/"><img src="https://img.shields.io/badge/▶_Probar_la_app-FF5A1F?style=for-the-badge&labelColor=0F1420" alt="Probar la app"/></a>
+  <a href="https://instrumentoapp.com"><img src="https://img.shields.io/badge/▶_Probar_la_app-FF5A1F?style=for-the-badge&labelColor=0F1420" alt="Probar la app"/></a>
+  <a href="https://instrumentoapp.com/aciertos"><img src="https://img.shields.io/badge/✅_Aciertos_públicos-C6F432?style=for-the-badge&labelColor=0F1420" alt="Aciertos públicos"/></a>
 </p>
 
 <p>
@@ -56,11 +59,14 @@
 | 📈 **Modelos** | Dixon-Coles para goles (con altitud, lesiones y descanso) · Binomial Negativa para 28 estadísticas (córners, tarjetas, tiros…) · cópula gaussiana para combinadas |
 | ✅ **Validación** | Backtest contra el mercado, calibración y control de falsos descubrimientos (FDR): cada mercado lleva su sello — *ok*, *ajustado* o *ruido* |
 | 🗂️ **Datos** | Ingesta automática de 16 ligas + copas, planteles y mercados de jugador con incertidumbre de minutos |
-| 📱 **Producto** | PWA instalable, modo oscuro/claro, en vivo, registro de picks con yield y gráfico de calibración, accesibilidad (contraste AA, objetivos táctiles ≥ 44 px) |
+| 🧠 **Contra el mercado** | Aprende del xG (goles esperados), mide el CLV de cada pick contra la cuota de cierre y si las bajas de titulares pesan más de lo que el modelo ya espera |
+| 📱 **Producto** | PWA instalable, picks del día, en vivo con gráfico de presión, combinadas, «¿Cuánto meter?» con el bank del usuario (Kelly fraccionado), registro con yield y calibración, notificaciones push propias (Web Push + VAPID) y referidos |
 | 💳 **Negocio** | Plan gratis / Pro controlado en el servidor, cobro por Yape o Plin y Libro de Reclamaciones virtual |
-| 🛡️ **Calidad** | CI con pytest + Playwright en cada PR, persistencia en Postgres para sobrevivir reinicios, health check y arranque en segundo plano |
+| 🛡️ **Calidad** | ~600 pruebas (pytest + Playwright con pantallas reales) en cada PR, ruff, arquitectura por capas vigilada por una prueba, hilos de fondo con semáforo de salud y avisos por Telegram |
 
-<sub>~18 000 líneas de Python · ~4 500 de JavaScript sin frameworks · código privado · 🔗 <a href="https://app-z8g3.onrender.com/">app-z8g3.onrender.com</a></sub>
+<img src="img/pantallas.png" alt="Pantallas: Hoy, Partidos, Análisis, En vivo, Combinar y Registro" width="100%"/>
+
+<sub>~26 000 líneas de Python · ~9 000 de JavaScript sin frameworks · código privado · 🔗 <a href="https://instrumentoapp.com">instrumentoapp.com</a></sub>
 
 <br>
 
@@ -118,7 +124,7 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
 
 **Python developer from Cusco, Peru.** I build complete products: from the statistical model to the server, the UI, the tests and the billing.
 
-**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, and tracks calibration and yield for every saved pick. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as an installable PWA, with a Free/Pro plan and CI running pytest + Playwright on every PR. **[Try it live →](https://app-z8g3.onrender.com/)**
+**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, measures closing-line value, and tracks calibration and yield for every saved pick — with a public, verifiable track record. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as an installable PWA, with a Free/Pro plan and CI running pytest + Playwright on every PR. **[Try it live →](https://instrumentoapp.com)**
 
 **🏇 Umapyoi AutoReroll** — a desktop bot that automates rerolling in Umamusume Global using OpenCV and Tesseract OCR to detect target SSR cards, with Discord webhook notifications and an English/Spanish UI.
 
