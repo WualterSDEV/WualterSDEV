@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&weight=800&size=28&duration=3000&pause=1000&color=FF5A1F&center=true&vCenter=true&width=900&lines=⚽+Modelos+estadísticos+de+fútbol;🐍+Python+%2B+Flask+en+producción;📊+Datos+que+se+validan+contra+el+mercado;🤖+Automatización+y+bots" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=800&size=28&duration=3000&pause=1000&color=FF5A1F&center=true&vCenter=true&width=900&lines=⚽+Modelos+estadísticos+de+fútbol;🐍+Python+%2B+Flask+en+producción;📊+Datos+que+se+validan+contra+el+mercado;🤖+Automatización+y+bots" alt="Typing SVG" />
 </div>
 
 <p align="center">
@@ -25,6 +25,7 @@
 - 📐 Me interesa el **modelado estadístico aplicado**: Dixon-Coles, Binomial Negativa, cópulas, calibración y backtesting.
 - 🚀 Me gusta llevar las cosas **a producción**: despliegue en Render, base en Postgres, CI con GitHub Actions y pruebas de interfaz con Playwright.
 - 🤖 Empecé automatizando tareas repetitivas con **visión por computadora y OCR** (ver Umapyoi AutoReroll).
+- 🔭 Ahora mismo: midiendo con datos reales si el xG, el CLV y las bajas de titulares mejoran los pronósticos.
 - 🎮 Fuera del código: videojuegos y mucha música.
 
 ---
@@ -65,6 +66,39 @@
 | 🛡️ **Calidad** | ~600 pruebas (pytest + Playwright con pantallas reales) en cada PR, ruff, arquitectura por capas vigilada por una prueba, hilos de fondo con semáforo de salud y avisos por Telegram |
 
 <img src="img/pantallas.png" alt="Pantallas: Hoy, Partidos, Análisis, En vivo, Combinar y Registro" width="100%"/>
+
+<table>
+  <tr>
+    <td align="center" width="25%"><h3>~600</h3><sub>pruebas automáticas en cada cambio</sub></td>
+    <td align="center" width="25%"><h3>16 + copas</h3><sub>ligas con datos propios</sub></td>
+    <td align="center" width="25%"><h3>28</h3><sub>estadísticas por partido modeladas</sub></td>
+    <td align="center" width="25%"><h3>100%</h3><sub>de los picks guardados antes del partido</sub></td>
+  </tr>
+</table>
+
+<details>
+<summary><b>🧠 Cómo funciona por dentro</b></summary>
+
+<br>
+
+```mermaid
+flowchart LR
+    A[(API-Football)] --> B[Base de partidos]
+    B --> C[Dixon-Coles<br>goles + xG]
+    B --> D[Binomial Negativa<br>28 estadísticas]
+    C --> E[Matriz de marcadores]
+    E --> F[Mercados coherentes]
+    D --> F
+    F --> G[Backtest y<br>calibración]
+    G --> H[Pick guardado<br>ANTES del partido]
+    H --> I["/aciertos y CLV<br>contra el cierre"]
+```
+
+- Todo sale de una sola matriz de marcadores: quién gana, goles y ambos marcan nunca se contradicen.
+- Walk-forward: entrena con el pasado, predice lo siguiente y avanza; un mercado que no supera el control de falsos descubrimientos se marca como *ruido*.
+- El historial público no se recalcula: lo que se ve es lo que el modelo dijo antes de cada partido.
+
+</details>
 
 <sub>~26 000 líneas de Python · ~9 000 de JavaScript sin frameworks · código privado · 🔗 <a href="https://instrumentoapp.com">instrumentoapp.com</a></sub>
 
