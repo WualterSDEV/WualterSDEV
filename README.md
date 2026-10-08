@@ -1,13 +1,8 @@
 <div align="center">
-  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=WualterS&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32"/>
-</div>
-
-<div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=800&size=28&duration=3000&pause=1000&color=FF5A1F&center=true&vCenter=true&width=900&lines=⚽+Modelos+estadísticos+de+fútbol;🐍+Python+%2B+Flask+en+producción;📊+Datos+que+se+validan+contra+el+mercado;🤖+Automatización+y+bots" alt="Typing SVG" />
+  <img width="100%" src="img/banner.png" alt="WualterS · Desarrollador Python · Cusco, Perú"/>
 </div>
 
 <p align="center">
-  <b>Desarrollador Python · Cusco, Perú 🇵🇪</b><br>
   Construyo productos completos: del modelo estadístico al servidor, la interfaz, las pruebas y el cobro.
 </p>
 
@@ -172,8 +167,4 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
   </a>
   <br><br>
   <img src="https://komarev.com/ghpvc/?username=WualterSDEV&style=for-the-badge&color=FF5A1F" alt="Visitas al perfil"/>
-</div>
-
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=footer"/>
 </div>
