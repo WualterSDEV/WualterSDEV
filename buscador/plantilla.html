@@ -34,7 +34,10 @@ input[type=search]:focus{outline:2px solid var(--accent);outline-offset:1px}
 .filters button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 label.opt{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:6px}
 select{width:100%;padding:7px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:14px;margin-bottom:8px}
-#count{font-size:12px;color:var(--muted);margin:4px 0}
+#count{font-size:12px;color:var(--muted)}
+.listhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:4px 0 6px}
+.listhead label{font-size:14px;font-weight:600;display:flex;gap:6px;align-items:center;cursor:pointer}
+.listhead input{width:18px;height:18px;accent-color:var(--accent)}
 #results{list-style:none;margin:0;padding:0;max-height:62vh;overflow:auto;border-top:1px solid var(--line)}
 #results li{display:flex;gap:8px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line);cursor:pointer}
 #results li:hover,#results li.active{background:var(--soft)}
@@ -91,7 +94,7 @@ mark{background:var(--hl);color:inherit}
     </div>
     <select id="cat"><option value="">Todas las categorías</option></select>
     <label class="opt"><input type="checkbox" id="byIng"> Buscar también por insumo (ej. "lucuma")</label>
-    <div id="count"></div>
+    <div class="listhead"><label><input type="checkbox" id="allChk"> Seleccionar todos</label><div id="count"></div></div>
     <ul id="results"></ul>
   </section>
 
@@ -100,7 +103,6 @@ mark{background:var(--hl);color:inherit}
       <h2>Seleccionadas (<span id="nsel">0</span>)</h2>
       <div class="actions">
         <label class="opt" style="margin:0"><input type="checkbox" id="incBase" checked> Incluir recetas base</label>
-        <button class="btn sec" id="addAll">Agregar resultados</button>
         <button class="btn sec" id="clear">Limpiar</button>
         <button class="btn" id="export" disabled>Descargar Excel</button>
       </div>
@@ -144,6 +146,8 @@ function hl(text) {
 }
 function renderList() {
   const m = matches(); $('#count').textContent = `${m.length} resultado${m.length === 1 ? '' : 's'}`;
+  const nOn = m.filter(r => sel.has(r.id)).length, chk = $('#allChk');
+  chk.checked = m.length > 0 && nOn === m.length; chk.indeterminate = nOn > 0 && nOn < m.length; chk.disabled = !m.length;
   $('#results').innerHTML = m.slice(0, 400).map(r => `<li data-id="${r.id}" class="${r.id === active ? 'active' : ''}">
       <div class="nm"><b>${hl(r.n)}</b><small>${r.carta ? `<span class="tag c">Carta: ${esc(r.carta[1])}</span>` : ''}<span class="tag">${r.t}</span>${esc(r.cod)} · ${esc(r.cat || r.area)}${r.pv ? ' · S/ ' + num(r.pv) : ''}</small></div>
       <button class="add ${sel.has(r.id) ? 'on' : ''}" data-add="${r.id}" title="${sel.has(r.id) ? 'Quitar' : 'Agregar'} al Excel">${sel.has(r.id) ? '✓' : '+'}</button></li>`).join('')
@@ -151,7 +155,9 @@ function renderList() {
 }
 function renderSel() {
   $('#nsel').textContent = sel.size; $('#export').disabled = !sel.size;
-  $('#sel').innerHTML = [...sel].map(id => `<span>${esc(BY[id].n)}<button data-rm="${id}" title="Quitar">×</button></span>`).join('');
+  const ids = [...sel], MAX = 24;
+  $('#sel').innerHTML = ids.slice(0, MAX).map(id => `<span>${esc(BY[id].n)}<button data-rm="${id}" title="Quitar">×</button></span>`).join('')
+    + (ids.length > MAX ? `<span style="padding-right:10px">y ${ids.length - MAX} más…</span>` : '');
 }
 function itemsTable(r, depth, seen) {
   const rows = r.it.map(i => {
@@ -184,7 +190,7 @@ document.addEventListener('click', e => {
 });
 ['#q', '#cat', '#byIng'].forEach(s => $(s).addEventListener('input', renderList));
 $('#clear').onclick = () => { sel.clear(); renderSel(); renderList(); if (active) renderPreview(); };
-$('#addAll').onclick = () => { matches().forEach(r => sel.add(r.id)); renderSel(); renderList(); if (active) renderPreview(); };
+$('#allChk').addEventListener('change', e => { const m = matches(); m.forEach(r => e.target.checked ? sel.add(r.id) : sel.delete(r.id)); renderSel(); renderList(); if (active) renderPreview(); });
 $('#export').onclick = () => exportXlsx([...sel]);
 $('#theme').onclick = () => { const d = document.documentElement, cur = d.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); d.dataset.theme = cur === 'dark' ? 'light' : 'dark'; };
 
