@@ -16,3 +16,12 @@ El Excel trae las hojas **Resumen**, **Recetas** (las elegidas, con insumos) y *
 pip install xlrd openpyxl
 python buscador/actualizar_buscador.py recetas_base_2026.xls recetas_venta_2026.xls
 ```
+
+## Otra sede a partir del Excel de Odoo (ej. Valle)
+
+```
+pip install openpyxl
+python buscador/buscador_desde_odoo.py MAESTRO_RECETAS_VALLE.xlsx Valle
+```
+Genera `Buscador_Recetas_VALLE.html`. Para solo pasar un Excel de Odoo a gramos:
+`python buscador/convertir_gramos.py entrada.xlsx salida.xlsx`

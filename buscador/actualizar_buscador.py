@@ -78,7 +78,7 @@ for kind, recs in (('V', v), ('B', b)):
 data = json.dumps(out, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 lib = open(os.path.join(HERE, 'xlsx.full.min.js'), encoding='utf-8').read()
 html = open(os.path.join(HERE, 'plantilla.html'), encoding='utf-8').read()
-html = html.replace('/*XLSX*/', lib, 1).replace('/*DATA*/', data, 1)
+html = html.replace('/*XLSX*/', lib, 1).replace('/*DATA*/', data, 1).replace('/*FUENTE*/', 'Inforest 2026 · Cusco', 1)
 open(OUT, 'w', encoding='utf-8').write(html)
 print(f'{len(out)} recetas ({sum(1 for o in out if o["carta"])} en carta, {sum(1 for o in out if o["postre"])} de pastelería, '
       f'{sum(1 for o in out if o["oid"])} con código Odoo) -> {OUT}')

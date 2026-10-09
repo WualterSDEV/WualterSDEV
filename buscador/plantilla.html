@@ -34,6 +34,7 @@ input[type=search]:focus{outline:2px solid var(--accent);outline-offset:1px}
 .filters button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 label.opt{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:6px}
 select{width:100%;padding:7px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:14px;margin-bottom:8px}
+html.nocost th:nth-child(5),html.nocost th:nth-child(6),html.nocost td:nth-child(5),html.nocost td:nth-child(6){display:none}
 #count{font-size:12px;color:var(--muted)}
 .listhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:4px 0 6px}
 .listhead label{font-size:14px;font-weight:600;display:flex;gap:6px;align-items:center;cursor:pointer}
@@ -79,7 +80,7 @@ mark{background:var(--hl);color:inherit}
 <body>
 <header>
   <h1>Buscador de Recetas</h1>
-  <p>Inforest 2026 · <span id="tot"></span> recetas · Excel en formato Odoo, en gramos · funciona sin internet</p>
+  <p>/*FUENTE*/ · <span id="tot"></span> recetas · Excel en formato Odoo, en gramos · funciona sin internet</p>
   <button class="theme" id="theme" title="Cambiar tema">◐ Tema</button>
 </header>
 <main>
@@ -124,6 +125,8 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 const num = (x, d = 2) => x == null || x === '' ? '' : Number(x).toLocaleString('es-PE', {maximumFractionDigits: d});
 
 $('#tot').textContent = DATA.length;
+if (!DATA.some(r => r.carta)) document.querySelector('#filters [data-f=carta]').remove();
+if (!DATA.some(r => r.costo != null)) document.documentElement.classList.add('nocost');
 [...new Set(DATA.map(r => r.cat).filter(Boolean))].sort().forEach(c => $('#cat').insertAdjacentHTML('beforeend', `<option>${esc(c)}</option>`));
 
 function matches() {
@@ -172,9 +175,9 @@ function itemsTable(r, depth, seen) {
 function renderPreview() {
   const r = BY[active]; if (!r) return;
   $('#preview').innerHTML = `<div class="rec-h"><div><h3>${esc(r.n)}</h3>
-    <div class="meta">${r.t === 'Venta' ? 'Receta de venta' : 'Receta base'} · Código ${esc(r.cod)} · ${esc(r.cat)} · ${esc(r.area)}
+    <div class="meta">${[r.t === 'Venta' ? 'Receta de venta' : 'Receta base', 'Código ' + esc(r.cod), esc(r.cat), esc(r.area)].filter(x => x && x !== 'Código ').join(' · ')}
     ${r.carta ? `<br>En carta: <b>${esc(r.carta[1])}</b> (${esc(r.carta[0])}, S/ ${num(r.carta[2])})` : ''}
-    ${r.pv ? `<br>Precio venta Inforest: S/ ${num(r.pv)}` : ''}${r.t === 'Base' ? `<br>Rinde: ${num(r.f)} ${esc(r.up || '')}` : ''}${r.oid ? ` · Código Odoo: <b>${esc(r.oid)}</b>` : ''} · Costo total: S/ ${num(r.costo)}</div></div>
+    ${r.pv ? `<br>Precio venta Inforest: S/ ${num(r.pv)}` : ''}${r.t === 'Base' || r.q != null ? `<br>Rinde: ${num(r.f)} ${esc(r.up || '')}` : ''}${r.oid && r.oid !== r.cod ? ` · Código Odoo: <b>${esc(r.oid)}</b>` : ''}${r.costo != null ? ` · Costo total: S/ ${num(r.costo)}` : ''}</div></div>
     <div class="actions"><button class="btn sec" data-add="${r.id}">${sel.has(r.id) ? 'Quitar de la selección' : 'Agregar a la selección'}</button>
     <button class="btn" data-one="${r.id}">Excel solo de esta</button></div></div>
     ${itemsTable(r, 0, new Set([r.id]))}`;
@@ -210,9 +213,9 @@ function exportXlsx(ids) {
     'Líneas de la lista de materiales/Componente/Referencia interna', 'Líneas de la lista de materiales/Componente/Nombre', 'Líneas de la lista de materiales/Cantidad'];
   const rows = [HEAD];
   list.forEach(r => {
-    const qty = r.t === 'Venta' ? 1 : (r.f ?? 1);
+    const qty = r.q ?? (r.t === 'Venta' ? 1 : (r.f ?? 1));
     // Fila de la receta con su rinde y unidad (ej. 72 PORCION); los insumos van debajo
-    rows.push([r.oid || '', r.n, 'Fabricar este producto', qty, r.t === 'Venta' ? 'UNIDAD' : (r.up || 'UNIDAD'), '', '', '']);
+    rows.push([r.oid || '', r.n, 'Fabricar este producto', qty, 'qu' in r ? r.qu : (r.t === 'Venta' ? 'UNIDAD' : (r.up || 'UNIDAD')), '', '', '']);
     r.it.forEach(i => rows.push(['', '', '', '', i[3], i[7] || '', i[0], i[2]]));
   });
   const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(rows);
