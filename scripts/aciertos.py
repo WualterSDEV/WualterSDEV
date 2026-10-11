@@ -56,26 +56,26 @@ def svg(datos, ahora):
   <clipPath id="c"><rect width="1200" height="520" rx="28"/></clipPath>
 </defs>
 <g clip-path="url(#c)">
-<rect width="1200" height="520" fill="#0B0D0C"/><rect width="1200" height="520" fill="url(#g1)"/>
-<rect x="1" y="1" width="1198" height="518" rx="27" fill="none" stroke="#303631" stroke-width="2"/>
+<rect width="1200" height="520" fill="#0A0B14"/><rect width="1200" height="520" fill="url(#g1)"/>
+<rect x="1" y="1" width="1198" height="518" rx="27" fill="none" stroke="#323759" stroke-width="2"/>
 <circle cx="64" cy="66" r="8" fill="#C6F432"/>
-<text x="86" y="76" font-size="28" font-weight="700" letter-spacing="3" fill="#ECEFEA">ACIERTOS EN VIVO</text>
-<text x="1140" y="76" font-size="24" fill="#979E98" text-anchor="end">{escape(fecha)}</text>
+<text x="86" y="76" font-size="28" font-weight="700" letter-spacing="3" fill="#EEF0FF">ACIERTOS EN VIVO</text>
+<text x="1140" y="76" font-size="24" fill="#8F95BA" text-anchor="end">{escape(fecha)}</text>
 """]
     if medido:
         sub = f"{ok} de {n} picks" + (f" · {dias} días" if dias else "")
         partes.append(f"""<text x="52" y="260" font-size="190" font-weight="800" letter-spacing="-8" fill="#C6F432">{pct}%</text>
-<text x="58" y="320" font-size="36" font-weight="700" fill="#ECEFEA">de acierto en los picks</text>
-<text x="58" y="364" font-size="28" fill="#979E98">{escape(sub)}</text>
+<text x="58" y="320" font-size="36" font-weight="700" fill="#EEF0FF">de acierto en los picks</text>
+<text x="58" y="364" font-size="28" fill="#8F95BA">{escape(sub)}</text>
 <rect x="58" y="392" width="440" height="14" rx="7" fill="#FFFFFF" fill-opacity=".08"/>
 <rect x="58" y="392" width="{round(440 * pct / 100)}" height="14" rx="7" fill="#C6F432"/>
 """)
     else:
         partes.append(f"""<text x="58" y="230" font-size="84" font-weight="800" fill="#C6F432">Midiendo…</text>
-<text x="58" y="290" font-size="34" font-weight="700" fill="#ECEFEA">{n} picks medidos</text>
-<text x="58" y="336" font-size="26" fill="#979E98">el % aparece con {PICKS_MINIMOS}: con pocos casos engaña</text>
+<text x="58" y="290" font-size="34" font-weight="700" fill="#EEF0FF">{n} picks medidos</text>
+<text x="58" y="336" font-size="26" fill="#8F95BA">el % aparece con {PICKS_MINIMOS}: con pocos casos engaña</text>
 """)
-    partes.append('<text x="58" y="476" font-size="23" fill="#979E98">Cada pick se guarda antes del partido · cuentan también los que fallaron</text>\n')
+    partes.append('<text x="58" y="476" font-size="23" fill="#8F95BA">Cada pick se guarda antes del partido · cuentan también los que fallaron</text>\n')
 
     # los últimos partidos con pick, con ✓ / ✗
     recientes = [r for r in datos.get("recientes") or [] if r.get("pick")][:3]
@@ -84,11 +84,11 @@ def svg(datos, ahora):
         bien = r["pick"].get("ok")
         color, signo = ("#C6F432", "✓") if bien else ("#FF8076", "✗")
         partido = f"{corto(r.get('local'), 14)} {r.get('marcador', '')} {corto(r.get('visitante'), 14)}"
-        partes.append(f"""<rect x="560" y="{y}" width="580" height="90" rx="16" fill="#131614" stroke="#242925" stroke-width="2"/>
+        partes.append(f"""<rect x="560" y="{y}" width="580" height="90" rx="16" fill="#121427" stroke="#242845" stroke-width="2"/>
 <circle cx="604" cy="{y + 45}" r="22" fill="{color}" fill-opacity=".16"/>
 <text x="604" y="{y + 55}" font-size="28" font-weight="800" fill="{color}" text-anchor="middle">{signo}</text>
-<text x="642" y="{y + 40}" font-size="26" font-weight="700" fill="#ECEFEA">{escape(partido)}</text>
-<text x="642" y="{y + 72}" font-size="22" fill="#C4C9C3">{escape(corto(r['pick'].get('texto'), 34))}</text>
+<text x="642" y="{y + 40}" font-size="26" font-weight="700" fill="#EEF0FF">{escape(partido)}</text>
+<text x="642" y="{y + 72}" font-size="22" fill="#C4C8E4">{escape(corto(r['pick'].get('texto'), 34))}</text>
 """)
     partes.append("</g></svg>\n")
     return "".join(partes)
