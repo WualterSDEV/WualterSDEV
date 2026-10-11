@@ -37,7 +37,7 @@
 <a href="https://instrumentoapp.com"><img src="img/hero.png" alt="Instrumento: pronósticos de fútbol con un modelo real" width="100%"/></a>
 
 <p>
-  <a href="https://instrumentoapp.com"><img src="img/btn-probar.png" height="44" alt="Probar la app"/></a>
+  <a href="https://instrumentoapp.com"><img src="img/btn-probar.png" height="44" alt="Probar la app gratis"/></a>
   <a href="https://instrumentoapp.com/aciertos"><img src="img/btn-aciertos.png" height="44" alt="Aciertos públicos"/></a>
 </p>
 

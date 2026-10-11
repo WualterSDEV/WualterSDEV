@@ -51,50 +51,50 @@ def svg(datos, ahora):
  font-family="{FUENTE}" role="img" aria-label="Aciertos de Instrumento">
 <defs>
   <radialGradient id="g1" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(120 20) scale(620)">
-    <stop offset="0" stop-color="#FF5A1F" stop-opacity=".40"/><stop offset="1" stop-color="#FF5A1F" stop-opacity="0"/></radialGradient>
+    <stop offset="0" stop-color="#C6F432" stop-opacity=".16"/><stop offset="1" stop-color="#C6F432" stop-opacity="0"/></radialGradient>
   <radialGradient id="g2" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(1160 430) scale(560)">
-    <stop offset="0" stop-color="#C6F432" stop-opacity=".22"/><stop offset="1" stop-color="#C6F432" stop-opacity="0"/></radialGradient>
-  <linearGradient id="tx" x1="0" x2="1"><stop offset="0" stop-color="#FF5A1F"/>
-    <stop offset=".55" stop-color="#FFB36B"/><stop offset="1" stop-color="#C6F432"/></linearGradient>
+    <stop offset="0" stop-color="#C6F432" stop-opacity=".08"/><stop offset="1" stop-color="#C6F432" stop-opacity="0"/></radialGradient>
+  <linearGradient id="tx" x1="0" x2="1"><stop offset="0" stop-color="#C6F432"/>
+    <stop offset="1" stop-color="#C6F432"/></linearGradient>
   <clipPath id="c"><rect width="1200" height="420" rx="26"/></clipPath>
 </defs>
 <g clip-path="url(#c)">
-<rect width="1200" height="420" fill="#0B0F17"/><rect width="1200" height="420" fill="url(#g1)"/>
+<rect width="1200" height="420" fill="#0B0D0C"/><rect width="1200" height="420" fill="url(#g1)"/>
 <rect width="1200" height="420" fill="url(#g2)"/>
 <rect x="1" y="1" width="1198" height="418" rx="25" fill="none" stroke="#FFFFFF" stroke-opacity=".12" stroke-width="2"/>
 <circle cx="62" cy="58" r="7" fill="#C6F432"><animate attributeName="opacity" values="1;.25;1" dur="1.6s" repeatCount="indefinite"/></circle>
-<text x="80" y="66" font-size="22" font-weight="700" letter-spacing="4" fill="#FF8A5B">INSTRUMENTO · ACIERTOS EN VIVO</text>
-<text x="1148" y="66" font-size="19" fill="#8593AD" text-anchor="end">actualizado {escape(fecha)}</text>
+<text x="80" y="66" font-size="22" font-weight="700" letter-spacing="4" fill="#ECEFEA">INSTRUMENTO · ACIERTOS EN VIVO</text>
+<text x="1148" y="66" font-size="19" fill="#979E98" text-anchor="end">actualizado {escape(fecha)}</text>
 """]
     if medido:
         sub = f"{ok} de {n} picks" + (f" · últimos {dias} días" if dias else "")
         partes.append(f"""<text x="54" y="220" font-size="150" font-weight="800" letter-spacing="-6" fill="url(#tx)">{pct}%</text>
-<text x="58" y="268" font-size="28" font-weight="700" fill="#E6EAF2">de acierto en los picks</text>
-<text x="58" y="304" font-size="22" fill="#8593AD">{escape(sub)}</text>
+<text x="58" y="268" font-size="28" font-weight="700" fill="#ECEFEA">de acierto en los picks</text>
+<text x="58" y="304" font-size="22" fill="#979E98">{escape(sub)}</text>
 <rect x="58" y="330" width="420" height="12" rx="6" fill="#FFFFFF" fill-opacity=".08"/>
 <rect x="58" y="330" width="{round(420 * pct / 100)}" height="12" rx="6" fill="url(#tx)"/>
 """)
     else:
         partes.append(f"""<text x="58" y="200" font-size="64" font-weight="800" fill="url(#tx)">Midiendo…</text>
-<text x="58" y="250" font-size="26" font-weight="700" fill="#E6EAF2">{n} picks medidos</text>
-<text x="58" y="288" font-size="21" fill="#8593AD">el % aparece con {PICKS_MINIMOS}: con pocos casos engaña</text>
+<text x="58" y="250" font-size="26" font-weight="700" fill="#ECEFEA">{n} picks medidos</text>
+<text x="58" y="288" font-size="21" fill="#979E98">el % aparece con {PICKS_MINIMOS}: con pocos casos engaña</text>
 """)
-    partes.append('<text x="58" y="394" font-size="18" fill="#5E6A82">Guardado antes de cada partido · incluye los que fallaron · instrumentoapp.com/aciertos</text>\n')
+    partes.append('<text x="58" y="394" font-size="18" fill="#6D746E">Guardado antes de cada partido · incluye los que fallaron · instrumentoapp.com/aciertos</text>\n')
 
     # los últimos partidos con pick, con ✓ / ✗
     recientes = [r for r in datos.get("recientes") or [] if r.get("pick")][:4]
     if recientes:
-        partes.append('<text x="560" y="114" font-size="18" font-weight="700" letter-spacing="3" fill="#8593AD">ÚLTIMOS PICKS</text>\n')
+        partes.append('<text x="560" y="114" font-size="18" font-weight="700" letter-spacing="3" fill="#979E98">ÚLTIMOS PICKS</text>\n')
     for i, r in enumerate(recientes):
         y = 132 + i * 56
         bien = r["pick"].get("ok")
-        color, signo = ("#C6F432", "✓") if bien else ("#FF5F57", "✗")
+        color, signo = ("#C6F432", "✓") if bien else ("#FF8076", "✗")
         partido = f"{corto(r.get('local'), 18)} {r.get('marcador', '')} {corto(r.get('visitante'), 18)}"
         partes.append(f"""<rect x="560" y="{y}" width="588" height="48" rx="12" fill="#FFFFFF" fill-opacity=".045"/>
 <circle cx="588" cy="{y + 24}" r="14" fill="{color}" fill-opacity=".16"/>
 <text x="588" y="{y + 31}" font-size="20" font-weight="800" fill="{color}" text-anchor="middle">{signo}</text>
-<text x="616" y="{y + 21}" font-size="17" font-weight="700" fill="#E6EAF2">{escape(partido)}</text>
-<text x="616" y="{y + 40}" font-size="15" fill="#B9C2D6">{escape(corto(r['pick'].get('texto'), 48))}</text>
+<text x="616" y="{y + 21}" font-size="17" font-weight="700" fill="#ECEFEA">{escape(partido)}</text>
+<text x="616" y="{y + 40}" font-size="15" fill="#C4C9C3">{escape(corto(r['pick'].get('texto'), 48))}</text>
 """)
     partes.append("</g></svg>\n")
     return "".join(partes)
