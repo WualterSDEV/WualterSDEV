@@ -25,6 +25,7 @@ FRASES = [
     "⚽ Modelos estadísticos de fútbol",
     "🐍 Python + Flask en producción",
     "📊 Datos que se validan contra el mercado",
+    "🔁 Un modelo que se mejora solo",
     "🤖 Automatización y bots",
 ]
 
@@ -75,10 +76,11 @@ CODIGO = """<div class=g1 style="left:-420px;top:-560px"></div><div class=grid><
   </div>
   <pre style="font-family:Mono;font-size:25px;line-height:1.62;padding:24px 34px;color:#E6EAF2">\
 <b class=k>class</b> <b class=c>WualterS</b>(<b class=c>Desarrollador</b>):
-    <i class=a>ubicacion</i>   = <s>"Cusco, Perú 🇵🇪"</s>
-    <i class=a>stack</i>       = [<s>"Python"</s>, <s>"Flask"</s>, <s>"pandas"</s>, <s>"SciPy"</s>, <s>"Postgres"</s>]
+    <i class=a>ubicacion</i>    = <s>"Cusco, Perú 🇵🇪"</s>
+    <i class=a>stack</i>        = [<s>"Python"</s>, <s>"Flask"</s>, <s>"pandas"</s>, <s>"SciPy"</s>, <s>"Postgres"</s>]
     <i class=a>construyendo</i> = <s>"Instrumento ⚽ → instrumentoapp.com"</s>
-    <i class=a>midiendo</i>    = [<s>"xG"</s>, <s>"CLV"</s>, <s>"bajas de titulares"</s>]
+    <i class=a>aprendiendo</i>  = [<s>"xG"</s>, <s>"CLV"</s>, <s>"bajas"</s>, <s>"calibración por liga"</s>]
+    <i class=a>contacto</i>     = <s>"wualters.dev@gmail.com"</s>
 
     <b class=k>def</b> <b class=f>filosofia</b>(<i class=a>self</i>):
         <b class=k>return</b> <s>"Medir antes de creer."</s>  <u># sin humo</u></pre>
@@ -142,7 +144,7 @@ def main():
     with sync_playwright() as p:
         b = p.chromium.launch()
         banner(b, css)
-        for nombre, cuerpo, ancho, alto in (("codigo", CODIGO, 1280, 500), ("umapyoi", UMAPYOI, 1600, 420)):
+        for nombre, cuerpo, ancho, alto in (("codigo", CODIGO, 1280, 540), ("umapyoi", UMAPYOI, 1600, 420)):
             pg = _pagina(b, css, cuerpo, ancho, alto)
             pg.screenshot(path=str(IMG / f"{nombre}.png"))
             pg.close()
