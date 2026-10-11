@@ -61,7 +61,7 @@
 |---|---|
 | 📈 **Modelos** | Dixon-Coles para goles (con altitud, lesiones y descanso) · Binomial Negativa para 28 estadísticas (córners, tarjetas, tiros…) · cópula gaussiana para combinadas |
 | ✅ **Validación** | Backtest contra el mercado, calibración y control de falsos descubrimientos (FDR): cada mercado lleva su sello — *ok*, *ajustado* o *ruido* |
-| 🗂️ **Datos** | Ingesta automática de 16 ligas + copas, planteles y mercados de jugador con incertidumbre de minutos |
+| 🗂️ **Datos** | Ingesta automática de 28 competiciones (ligas de 9 países, copas y selecciones), planteles y mercados de jugador con incertidumbre de minutos |
 | 🧠 **Contra el mercado** | Aprende del xG (goles esperados), mide el CLV de cada pick contra la cuota de cierre, calibra el 1X2 por liga y descuenta las bajas de titulares |
 | 🔁 **Auto-mejora** | Cada semana prueba 7 ajustes del modelo contra partidos pasados (walk-forward) y aplica solo los que ganan claro; los picks de una liga que fallan se apagan solos |
 | 📱 **Producto** | PWA instalable, picks del día, en vivo con gráfico de presión, combinadas, «¿Cuánto meter?» con el bank del usuario (Kelly fraccionado), registro con yield y calibración, notificaciones push propias (Web Push + VAPID) y referidos |
@@ -73,7 +73,7 @@
 <table>
   <tr>
     <td align="center" width="25%"><h3>~770</h3><sub>pruebas automáticas en cada cambio</sub></td>
-    <td align="center" width="25%"><h3>16 + copas</h3><sub>ligas con datos propios</sub></td>
+    <td align="center" width="25%"><h3>28</h3><sub>ligas, copas y selecciones con datos propios</sub></td>
     <td align="center" width="25%"><h3>28</h3><sub>estadísticas por partido modeladas</sub></td>
     <td align="center" width="25%"><h3>100%</h3><sub>de los picks guardados antes del partido</sub></td>
   </tr>
