@@ -1,7 +1,7 @@
 """Genera las imágenes del perfil. Todas se guardan en el repo para que carguen
 siempre, también en la app de GitHub del celular (los badges externos a veces
 fallan). Identidad propia del perfil: fondo tinta, violeta y cian de acento,
-títulos en Space Grotesk y texto en Inter. El lima queda solo para Instrumento.
+títulos en Space Grotesk y texto en Inter. Todo en la misma paleta.
 
 Las tarjetas con texto se diseñan a 820 px de ancho y se guardan al doble: en
 un celular se ven a ~45% y la letra sigue legible.
@@ -72,10 +72,10 @@ def _marca(nombre, alto=34):
     return f'<img src="data:image/svg+xml;base64,{_b64(svg.encode())}" style="height:{alto}px;width:{alto}px">'
 
 
-# paleta propia del perfil; --inst es el lima de Instrumento, solo para lo suyo
+# paleta propia del perfil; --vivo marca lo que está en producción
 BASE = """
 :root{--bg:#0A0B14;--card:#121427;--soft:#1A1D35;--line:#242845;--line2:#323759;
-      --tx:#EEF0FF;--tx2:#C4C8E4;--mut:#8F95BA;--hi:#9D8CFF;--cian:#3DD9EB;--inst:#C6F432;--neg:#FF8076;
+      --tx:#EEF0FF;--tx2:#C4C8E4;--mut:#8F95BA;--hi:#9D8CFF;--cian:#3DD9EB;--vivo:#3DD68C;--neg:#FF8076;
       --grad:linear-gradient(100deg,#9D8CFF,#3DD9EB)}
 *{margin:0;box-sizing:border-box}
 body{font-family:Texto;background:var(--bg);color:var(--tx);position:relative}
@@ -138,7 +138,7 @@ def banner_html():
 </div>
 <div class=card style="position:absolute;right:66px;top:368px;width:240px;padding:12px 16px;transform:rotate(-2deg);
      box-shadow:0 30px 60px rgba(0,0,0,.55);display:flex;align-items:center;gap:10px">
-  <i style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--inst);box-shadow:0 0 12px var(--inst)"></i>
+  <i style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--vivo);box-shadow:0 0 12px var(--vivo)"></i>
   <div><div style="font-size:11px;font-weight:800;letter-spacing:2px;color:var(--mut)">EN PRODUCCIÓN</div>
   <div style="font-size:15px;font-weight:800;margin-top:2px">instrumentoapp.com</div></div>
 </div>
@@ -179,7 +179,7 @@ HABILIDADES = [
 
 def habilidades_html():
     def etiqueta(p):
-        color, fondo = (("var(--inst)", "rgba(198,244,50,.10)") if p == "Instrumento"
+        color, fondo = (("var(--hi)", "rgba(157,140,255,.14)") if p == "Instrumento"
                         else ("var(--cian)", "rgba(61,217,235,.12)"))
         return (f'<span style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:{color};background:{fondo};'
                 f'padding:4px 9px;border-radius:999px">{p.upper()}</span>')
@@ -245,7 +245,7 @@ def _chips(lista, alto=18):
 
 def proyectos_html():
     cifras = "".join(f'<div style="flex:1;background:var(--soft);border-radius:12px;padding:10px 12px">'
-                     f'<div class=d style="font-size:30px;font-weight:700;line-height:1;color:var(--inst)">{n}</div>'
+                     f'<div class="d g" style="font-size:30px;font-weight:700;line-height:1">{n}</div>'
                      f'<div style="font-size:12px;font-weight:700;color:var(--mut);margin-top:4px;line-height:1.3">{t}</div></div>'
                      for n, t in (("300+", "PRs en<br>6 semanas"), ("~770", "pruebas por<br>cambio"),
                                   ("28", "ligas y<br>copas")))
@@ -263,11 +263,11 @@ def proyectos_html():
   <div style="margin-top:auto;padding-top:18px;font-size:14px;font-weight:700;color:var(--mut)">{pie}</div>
 </div>"""
     instrumento = tarjeta(
-        '<i class="ph ph-soccer-ball"></i>', "#C6F432", "rgba(198,244,50,.10)", "DESTACADO · APP WEB", "Instrumento",
+        '<i class="ph ph-soccer-ball"></i>', "#9D8CFF", "rgba(157,140,255,.12)", "DESTACADO · APP WEB", "Instrumento",
         "Pronósticos de fútbol con un modelo estadístico real. Gratis, en PC y celular, y publica cuánto acierta.",
         f'<div style="display:flex;gap:8px;margin-top:16px">{cifras}</div>',
         _chips([("python", "Python"), ("flask", "Flask"), ("postgresql", "PostgreSQL"), ("scipy", "SciPy"), ("javascript", "JS")]),
-        '<span style="color:var(--inst)">●</span> En producción · instrumentoapp.com')
+        '<span style="color:var(--vivo)">●</span> En producción · instrumentoapp.com')
     umapyoi = tarjeta(
         "🏇", "#3DD9EB", "rgba(61,217,235,.12)", "AUTOMATIZACIÓN · ESCRITORIO", "Umapyoi AutoReroll",
         "Bot que hace solo el reroll de Umamusume Global: crea el perfil, reclama recompensas, tira el gacha "
