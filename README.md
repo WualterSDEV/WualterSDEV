@@ -1,159 +1,119 @@
-<div align="center">
-  <img width="100%" src="img/banner.gif" alt="WualterS · Desarrollador Python · Cusco, Perú"/>
-</div>
+<img src="img/banner.png" alt="WualterS · Desarrollador Python · Modelos estadísticos llevados a producción · Cusco, Perú" width="100%"/>
 
-<p align="center">
-  Construyo productos completos: del modelo estadístico al servidor, la interfaz, las pruebas y el despliegue.
-</p>
-
-<p align="center">
-  <a href="#-proyectos"><img src="img/btn-proyectos.png" height="44" alt="Proyectos"/></a>
-  <a href="#-stack"><img src="img/btn-stack.png" height="44" alt="Stack"/></a>
-  <a href="#-contacto"><img src="img/btn-contacto.png" height="44" alt="Contacto"/></a>
-  <a href="#-english"><img src="img/btn-english.png" height="44" alt="English"/></a>
-</p>
-
----
-
-## 👋 Sobre mí
-
-- ⚽ Hoy trabajo en **Instrumento**, una app web que calcula cientos de mercados por partido de fútbol con modelos estadísticos reales y mide si aciertan.
-- 📐 Me interesa el **modelado estadístico aplicado**: Dixon-Coles, Binomial Negativa, cópulas, calibración y backtesting.
-- 🚀 Me gusta llevar las cosas **a producción**: despliegue en Render, base en Postgres, CI con GitHub Actions y pruebas de interfaz con Playwright.
-- 🤖 Empecé automatizando tareas repetitivas con **visión por computadora y OCR** (ver Umapyoi AutoReroll).
-- 🔁 Ahora mismo: un modelo que **se mejora solo cada semana** y aplica un cambio únicamente si gana contra el actual con partidos ya jugados.
-- 🎮 Fuera del código: videojuegos y mucha música.
-
-<img src="img/codigo.png" alt="class WualterS(Desarrollador)" width="100%"/>
-
----
-
-## 🧭 Proyectos
-
-### ⚽ Instrumento — análisis y predicción de fútbol
-
-> *Calcula cientos de mercados por partido, los compara contra la cuota de la casa y registra si acertaste.*
-
-<a href="https://instrumentoapp.com"><img src="img/hero.png" alt="Instrumento: pronósticos de fútbol con un modelo real" width="100%"/></a>
+Desarrollo productos de datos de punta a punta: el modelo estadístico, el servidor, la interfaz, las pruebas y el despliegue. Hoy construyo **Instrumento**, una app web de pronósticos de fútbol que publica cuánto acierta.
 
 <p>
-  <a href="https://instrumentoapp.com"><img src="img/btn-probar.png" height="44" alt="Probar la app gratis"/></a>
-  <a href="https://instrumentoapp.com/aciertos"><img src="img/btn-aciertos.png" height="44" alt="Aciertos públicos"/></a>
+  <a href="https://instrumentoapp.com"><img src="img/btn-app.png" height="44" alt="Abrir Instrumento"/></a>
+  <a href="mailto:wualters.dev@gmail.com"><img src="img/btn-correo.png" height="44" alt="Escribir a wualters.dev@gmail.com"/></a>
 </p>
 
-<a href="https://instrumentoapp.com/aciertos"><img src="https://raw.githubusercontent.com/WualterSDEV/WualterSDEV/datos/aciertos.svg" alt="Aciertos de Instrumento en vivo" width="100%"/></a>
+---
 
-<sub>☝️ Datos reales de la app, se actualizan solos cada 6 horas. Cada pick se guarda antes del partido y cuentan también los que fallaron.</sub>
+## Proyecto destacado
 
-<sub><b>Python 3.11 · Flask · pandas · SciPy · PostgreSQL (Neon) · Render · PWA · Playwright · GitHub Actions</b></sub>
+### Instrumento · pronósticos de fútbol con un modelo real
 
-| | |
-|---|---|
-| 📈 **Modelos** | Dixon-Coles para goles (con altitud, lesiones y descanso) · Binomial Negativa para 28 estadísticas (córners, tarjetas, tiros…) · cópula gaussiana para combinadas |
-| ✅ **Validación** | Backtest contra el mercado, calibración y control de falsos descubrimientos (FDR): cada mercado lleva su sello — *ok*, *ajustado* o *ruido* |
-| 🗂️ **Datos** | Ingesta automática de 28 competiciones (ligas de 9 países, copas y selecciones), planteles y mercados de jugador con incertidumbre de minutos |
-| 🧠 **Contra el mercado** | Aprende del xG (goles esperados), mide el CLV de cada pick contra la cuota de cierre, calibra el 1X2 por liga y descuenta las bajas de titulares |
-| 🔁 **Auto-mejora** | Cada semana prueba 7 ajustes del modelo contra partidos pasados (walk-forward) y aplica solo los que ganan claro; los picks de una liga que fallan se apagan solos |
-| 📱 **Producto** | PWA instalable, picks del día, en vivo con gráfico de presión, combinadas, «¿Cuánto meter?» con el bank del usuario (Kelly fraccionado), registro con yield y calibración y notificaciones push propias (Web Push + VAPID) |
-| 🆓 **Gratis** | Toda la app es gratis, sin plan de pago: cuentas con código de recuperación, protección contra cuentas falsas y Libro de Reclamaciones virtual |
-| 🛡️ **Calidad** | ~770 pruebas (pytest + Playwright con pantallas reales) en cada PR, ruff, arquitectura por capas vigilada por una prueba, hilos de fondo con semáforo de salud y avisos por Telegram |
+**El problema:** casi todos los pronósticos de fútbol que circulan son opiniones, y nadie lleva la cuenta de cuántos aciertan.
 
-<img src="img/pantallas.png" alt="Pantallas: Hoy, Partidos, Análisis, En vivo, Combinar y Registro" width="100%"/>
+**Qué hace:** calcula la probabilidad de cientos de resultados por partido con modelos estadísticos, la compara con la cuota de la casa, guarda cada pick antes de que empiece el partido y publica sus aciertos, incluidos los que fallaron. Es gratis y funciona en PC y en el celular.
 
-<table>
-  <tr>
-    <td align="center" width="25%"><h3>~770</h3><sub>pruebas automáticas en cada cambio</sub></td>
-    <td align="center" width="25%"><h3>28</h3><sub>ligas, copas y selecciones con datos propios</sub></td>
-    <td align="center" width="25%"><h3>28</h3><sub>estadísticas por partido modeladas</sub></td>
-    <td align="center" width="25%"><h3>100%</h3><sub>de los picks guardados antes del partido</sub></td>
-  </tr>
-</table>
+<a href="https://instrumentoapp.com"><img src="img/hero.jpg" alt="Instrumento en PC y en el celular" width="100%"/></a>
+
+<p>
+  <a href="https://instrumentoapp.com"><img src="img/btn-app.png" height="40" alt="Abrir la app"/></a>
+  <a href="https://instrumentoapp.com/aciertos"><img src="img/btn-aciertos.png" height="40" alt="Aciertos públicos"/></a>
+  <a href="https://instrumentoapp.com/como-funciona"><img src="img/btn-como.png" height="40" alt="Cómo funciona"/></a>
+</p>
+
+**Funciones principales**
+
+- **Hoy:** los picks más seguros del día, cada uno con su probabilidad y el nivel de datos que lo respalda.
+- **Análisis por partido:** quién gana, goles, córners, tarjetas y tiros, con una combinada sugerida y el contexto (árbitro, descanso, historial).
+- **En vivo:** gráfico de presión que se actualiza durante el partido y avisos push con goles y picks.
+- **Combinar:** junta líneas de varios partidos y calcula la probabilidad de que salgan todas, sin multiplicar a ciegas las del mismo partido.
+- **Registro:** tus picks con acierto, ganancia en unidades y «¿Cuánto meter?» según tu bank (Kelly fraccionado).
+- **Se mejora solo:** reentrena cada día y cada semana prueba ajustes contra partidos ya jugados; aplica solo los que ganan.
+
+**Tecnología:** Python 3.11 · Flask · pandas · SciPy · PostgreSQL (Neon) · JavaScript sin frameworks (PWA) · pytest · Playwright · GitHub Actions · Render
+
+**Estado:** en producción en [instrumentoapp.com](https://instrumentoapp.com) · ~770 pruebas automáticas en cada cambio · 28 competiciones · código privado.
+
+#### Aciertos en vivo
+
+<a href="https://instrumentoapp.com/aciertos"><img src="https://raw.githubusercontent.com/WualterSDEV/WualterSDEV/datos/aciertos.svg" alt="Porcentaje de acierto de los picks de Instrumento, actualizado cada 6 horas" width="100%"/></a>
+
+<sub>Datos reales de la app, actualizados solos cada 6 horas. El % aparece recién con 20 picks medidos.</sub>
+
+#### Pantallas
+
+<img src="img/pantallas.jpg" alt="Pantallas de Instrumento: Hoy, Partidos, Análisis, En vivo, Combinar y Registro" width="100%"/>
+
+<sub>Interfaz real de la app, mostrada con datos de ejemplo.</sub>
 
 <details>
-<summary><b>🧠 Cómo funciona por dentro</b></summary>
+<summary><b>Cómo funciona por dentro</b></summary>
 
 <br>
 
-```mermaid
-flowchart LR
-    A[(API-Football)] --> B[Base de partidos]
-    B --> C[Dixon-Coles<br>goles + xG]
-    B --> D[Binomial Negativa<br>28 estadísticas]
-    C --> E[Matriz de marcadores]
-    E --> F[Mercados coherentes]
-    D --> F
-    F --> G[Backtest y<br>calibración]
-    G --> H[Pick guardado<br>ANTES del partido]
-    H --> I["/aciertos y CLV<br>contra el cierre"]
-    I -. cada semana .-> J{{Auto-mejora<br>¿gana el cambio?}}
-    J -. sí .-> C
-```
-
-- Todo sale de una sola matriz de marcadores: quién gana, goles y ambos marcan nunca se contradicen.
-- Walk-forward: entrena con el pasado, predice lo siguiente y avanza; un mercado que no supera el control de falsos descubrimientos se marca como *ruido*.
-- El historial público no se recalcula: lo que se ve es lo que el modelo dijo antes de cada partido.
-- La auto-mejora solo cambia algo si gana con partidos que el modelo todavía no había visto; si no, todo queda como está.
+1. **Datos:** ingesta automática de API-Football: partidos, estadísticas, planteles y alineaciones de 28 competiciones.
+2. **Goles:** modelo Dixon-Coles (con xG, altitud, lesiones y descanso). De una sola matriz de marcadores salen quién gana, goles y ambos marcan, así nunca se contradicen.
+3. **Estadísticas:** Binomial Negativa para córners, tarjetas, tiros y faltas; cópula gaussiana para las combinadas.
+4. **Validación:** backtest walk-forward, calibración y control de falsos descubrimientos. Un mercado que no lo supera se marca como *ruido*.
+5. **Medición:** cada pick se guarda antes del partido y se cierra con el resultado. También se mide el CLV contra la cuota de cierre.
+6. **Mejora:** cada semana compara 7 ajustes del modelo con partidos que no vio y aplica solo los que ganan claro.
 
 </details>
 
 <details>
-<summary><b>⏰ Lo que la app hace sola cada día</b></summary>
+<summary><b>Lo que la app hace sola cada día</b> (hora de Lima)</summary>
 
 <br>
 
-| Hora (Lima) | Qué pasa |
-|---|---|
-| 🌙 1:00 · cada 7 días | **Auto-mejora** semanal del modelo: prueba, compara y aplica solo lo que gana |
-| 💾 4:00 | Respaldo diario de cuentas, picks e historial |
-| 🧮 5:00 | Reentrena con los resultados nuevos |
-| ☀️ Mañana | Arma las **combinadas del día** (del día, alta y bomba) y publica los picks en el canal de Telegram |
-| 📡 Durante el partido | Sigue cada partido en vivo cada 3 min: presión, goles y avisos push |
-| 🏁 Al terminar cada partido | Cierra los picks con el marcador y las estadísticas finales; en la noche el canal cuenta cómo salieron |
-| 📬 Lunes 10:00 | «Tu semana» a cada usuario y un reporte al dueño |
+- **1:00, cada 7 días:** auto-mejora del modelo.
+- **4:00:** respaldo de cuentas, picks e historial.
+- **5:00:** reentreno con los resultados nuevos.
+- **Mañana:** combinadas del día y picks en el canal de Telegram.
+- **Durante cada partido:** seguimiento en vivo y avisos push.
+- **Al terminar cada partido:** cierre de los picks con el marcador y las estadísticas finales.
+- **Lunes 10:00:** resumen «Tu semana» para cada usuario.
 
-<sub>Hilos de fondo con latido propio: si uno se cae o la memoria sube, llega un aviso por Telegram.</sub>
+Cada tarea de fondo reporta su estado; si una se cae, llega un aviso por Telegram.
 
 </details>
 
-<sub>~31 000 líneas de Python · ~10 000 de JavaScript sin frameworks · código privado · 🔗 <a href="https://instrumentoapp.com">instrumentoapp.com</a></sub>
+---
 
-<br>
+## Otros proyectos
 
-### 🏇 Umapyoi AutoReroll — automatización para Umamusume Global
+### Umapyoi AutoReroll · automatización para Umamusume Global
 
-<img src="img/umapyoi.png" alt="Umapyoi AutoReroll" width="100%"/>
+Bot de escritorio que hace solo el reroll del juego: acepta términos, crea el perfil, reclama recompensas, tira el gacha y detecta las cartas SSR objetivo con visión por computadora. Avisa por Discord y tiene interfaz en español e inglés.
 
-Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el perfil, reclama recompensas, tira el gacha y **detecta las cartas SSR objetivo** con OpenCV + Tesseract OCR. Avisa por webhook de Discord e incluye interfaz en español e inglés.
+**Tecnología:** Python · OpenCV · Tesseract OCR · Tkinter · webhooks de Discord
 
+**Estado:** repositorio privado.
 
 ---
 
-## 🛠️ Stack
+## Tecnologías
 
-<img src="img/stack.png" alt="Python, JavaScript, Flask, PostgreSQL, pandas, SciPy, OpenCV, Render, GitHub Actions, pytest, Playwright" width="100%"/>
-
----
-
-## 🐍 Actividad
-
-<div align="center">
-  <img src="https://raw.githubusercontent.com/WualterSDEV/WualterSDEV/output/snake.svg" alt="La serpiente se come mis contribuciones" width="100%"/>
-  <br>
-  <sub>La serpiente se come mis contribuciones del año (se actualiza sola cada día).</sub>
-</div>
+- **Lenguajes:** Python · JavaScript · HTML y CSS · SQL
+- **Backend y datos:** Flask · PostgreSQL · SQLite · pandas · NumPy · SciPy
+- **Modelado:** Dixon-Coles · Binomial Negativa · cópulas · calibración · backtesting · criterio de Kelly
+- **Automatización:** OpenCV · Tesseract OCR · Selenium · Discord
+- **Calidad y despliegue:** pytest · Playwright · ruff · GitHub Actions · Render · PWA
 
 ---
 
-## 💡 Cómo trabajo
+## Cómo trabajo
 
-- **Medir antes de creer.** Un modelo sin validación es una opinión: por eso cada mercado de Instrumento pasa por backtest y calibración antes de mostrarse como confiable.
-- **Honestidad con el usuario.** La app dice lo que *no* puede hacer y por qué (por ejemplo, no scrapea cuotas para no arriesgar la cuenta del usuario).
-- **Cambios pequeños y verificables.** PRs chicos, pruebas automáticas y documentación de cada decisión.
+- **Medir antes de creer.** Un modelo sin validación es una opinión: cada mercado pasa por backtest y calibración antes de mostrarse.
+- **Honestidad con el usuario.** La app dice lo que no puede hacer y por qué, y no oculta los picks que fallan.
+- **Cambios pequeños y verificables.** Pull requests chicos, pruebas automáticas en cada uno y cada decisión documentada.
 
 ---
 
-<a name="-contacto"></a>
-## 📬 Contacto
+## Contacto
 
 ¿Un proyecto con datos, un modelo que hay que llevar a producción o una automatización? Escríbeme.
 
@@ -162,19 +122,15 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
   <a href="https://instrumentoapp.com"><img src="img/btn-web.png" height="44" alt="instrumentoapp.com"/></a>
 </p>
 
----
-
-<a name="-english"></a>
 <details>
-<summary><b>🇺🇸 English</b></summary>
+<summary><b>English</b></summary>
 
 <br>
 
-**Python developer from Cusco, Peru.** I build complete products: from the statistical model to the server, the UI, the tests and the deployment. Reach me at **[wualters.dev@gmail.com](mailto:wualters.dev@gmail.com)**.
+**Python developer from Cusco, Peru.** I build data products end to end: the statistical model, the server, the UI, the tests and the deployment. Contact: [wualters.dev@gmail.com](mailto:wualters.dev@gmail.com).
 
-**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, measures closing-line value, retrains itself daily and runs a weekly self-improvement loop that only ships changes that beat the current model on unseen matches, and tracks calibration and yield for every saved pick — with a public, verifiable track record. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as a free installable PWA, with CI running pytest + Playwright on every PR. **[Try it live →](https://instrumentoapp.com)**
+**Instrumento** ([instrumentoapp.com](https://instrumentoapp.com)) is a free football analytics web app. It prices hundreds of markets per match with statistical models (Dixon-Coles for goals, Negative Binomial for match stats, a Gaussian copula for accumulators), compares them with bookmaker odds, saves every pick before kick-off and publishes its track record, misses included. It retrains daily and runs a weekly self-improvement loop that only ships changes that beat the current model on unseen matches. Built with Flask, pandas, SciPy and PostgreSQL, deployed on Render as an installable PWA, with ~770 automated tests (pytest + Playwright) on every change. Source code is private.
 
-**🏇 Umapyoi AutoReroll** — a desktop bot that automates rerolling in Umamusume Global using OpenCV and Tesseract OCR to detect target SSR cards, with Discord webhook notifications and an English/Spanish UI.
+**Umapyoi AutoReroll** is a desktop bot that automates rerolling in Umamusume Global, using OpenCV and Tesseract OCR to detect target SSR cards, with Discord notifications and an English/Spanish UI. Private repository.
 
 </details>
-
