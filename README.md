@@ -3,14 +3,14 @@
 </div>
 
 <p align="center">
-  Construyo productos completos: del modelo estadístico al servidor, la interfaz, las pruebas y el cobro.
+  Construyo productos completos: del modelo estadístico al servidor, la interfaz, las pruebas y el despliegue.
 </p>
 
 <p align="center">
-  <a href="#-proyectos"><img src="https://img.shields.io/badge/Proyectos-FF5A1F?style=for-the-badge&labelColor=0F1420" alt="Proyectos"/></a>
-  <a href="#-stack"><img src="https://img.shields.io/badge/Stack-8593AD?style=for-the-badge&labelColor=0F1420" alt="Stack"/></a>
-  <a href="#-contacto"><img src="https://img.shields.io/badge/Contacto-C6F432?style=for-the-badge&labelColor=0F1420" alt="Contacto"/></a>
-  <a href="#-english"><img src="https://img.shields.io/badge/🇺🇸_English-4CAF50?style=for-the-badge&labelColor=0F1420" alt="English"/></a>
+  <a href="#-proyectos"><img src="img/btn-proyectos.png" height="44" alt="Proyectos"/></a>
+  <a href="#-stack"><img src="img/btn-stack.png" height="44" alt="Stack"/></a>
+  <a href="#-contacto"><img src="img/btn-contacto.png" height="44" alt="Contacto"/></a>
+  <a href="#-english"><img src="img/btn-english.png" height="44" alt="English"/></a>
 </p>
 
 ---
@@ -37,25 +37,15 @@
 <a href="https://instrumentoapp.com"><img src="img/hero.png" alt="Instrumento: pronósticos de fútbol con un modelo real" width="100%"/></a>
 
 <p>
-  <a href="https://instrumentoapp.com"><img src="https://img.shields.io/badge/▶_Probar_la_app-FF5A1F?style=for-the-badge&labelColor=0F1420" alt="Probar la app"/></a>
-  <a href="https://instrumentoapp.com/aciertos"><img src="https://img.shields.io/badge/✅_Aciertos_públicos-C6F432?style=for-the-badge&labelColor=0F1420" alt="Aciertos públicos"/></a>
+  <a href="https://instrumentoapp.com"><img src="img/btn-probar.png" height="44" alt="Probar la app gratis"/></a>
+  <a href="https://instrumentoapp.com/aciertos"><img src="img/btn-aciertos.png" height="44" alt="Aciertos públicos"/></a>
 </p>
 
 <a href="https://instrumentoapp.com/aciertos"><img src="https://raw.githubusercontent.com/WualterSDEV/WualterSDEV/datos/aciertos.svg" alt="Aciertos de Instrumento en vivo" width="100%"/></a>
 
 <sub>☝️ Datos reales de la app, se actualizan solos cada 6 horas. Cada pick se guarda antes del partido y cuentan también los que fallaron.</sub>
 
-<p>
-  <img src="https://img.shields.io/badge/Python_3.11-3776AB?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white"/>
-  <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white"/>
-  <img src="https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white"/>
-  <img src="https://img.shields.io/badge/PostgreSQL_(Neon)-4169E1?style=flat-square&logo=postgresql&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Render-46E3B7?style=flat-square&logo=render&logoColor=black"/>
-  <img src="https://img.shields.io/badge/PWA-5A0FC8?style=flat-square&logo=pwa&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white"/>
-  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white"/>
-</p>
+<sub><b>Python 3.11 · Flask · pandas · SciPy · PostgreSQL (Neon) · Render · PWA · Playwright · GitHub Actions</b></sub>
 
 | | |
 |---|---|
@@ -64,8 +54,8 @@
 | 🗂️ **Datos** | Ingesta automática de 28 competiciones (ligas de 9 países, copas y selecciones), planteles y mercados de jugador con incertidumbre de minutos |
 | 🧠 **Contra el mercado** | Aprende del xG (goles esperados), mide el CLV de cada pick contra la cuota de cierre, calibra el 1X2 por liga y descuenta las bajas de titulares |
 | 🔁 **Auto-mejora** | Cada semana prueba 7 ajustes del modelo contra partidos pasados (walk-forward) y aplica solo los que ganan claro; los picks de una liga que fallan se apagan solos |
-| 📱 **Producto** | PWA instalable, picks del día, en vivo con gráfico de presión, combinadas, «¿Cuánto meter?» con el bank del usuario (Kelly fraccionado), registro con yield y calibración, notificaciones push propias (Web Push + VAPID) y referidos |
-| 💳 **Negocio** | Plan gratis / Pro controlado en el servidor, cobro por Yape o Plin y Libro de Reclamaciones virtual |
+| 📱 **Producto** | PWA instalable, picks del día, en vivo con gráfico de presión, combinadas, «¿Cuánto meter?» con el bank del usuario (Kelly fraccionado), registro con yield y calibración y notificaciones push propias (Web Push + VAPID) |
+| 🆓 **Gratis** | Toda la app es gratis, sin plan de pago: cuentas con código de recuperación, protección contra cuentas falsas y Libro de Reclamaciones virtual |
 | 🛡️ **Calidad** | ~770 pruebas (pytest + Playwright con pantallas reales) en cada PR, ruff, arquitectura por capas vigilada por una prueba, hilos de fondo con semáforo de salud y avisos por Telegram |
 
 <img src="img/pantallas.png" alt="Pantallas: Hoy, Partidos, Análisis, En vivo, Combinar y Registro" width="100%"/>
@@ -135,37 +125,12 @@ flowchart LR
 
 Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el perfil, reclama recompensas, tira el gacha y **detecta las cartas SSR objetivo** con OpenCV + Tesseract OCR. Avisa por webhook de Discord e incluye interfaz en español e inglés.
 
-<p>
-  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Tesseract_OCR-3C3C3C?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Tkinter-FFD43B?style=flat-square&logo=python&logoColor=blue"/>
-  <img src="https://img.shields.io/badge/Discord_Webhooks-5865F2?style=flat-square&logo=discord&logoColor=white"/>
-</p>
 
 ---
 
 ## 🛠️ Stack
 
-**Lenguajes**<br>
-<img src="https://skillicons.dev/icons?i=python,js,html,css,sql&theme=dark"/>
-
-**Backend y datos**<br>
-<img src="https://skillicons.dev/icons?i=flask,postgres,sqlite&theme=dark"/><br>
-<img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"/>
-<img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white"/>
-<img src="https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white"/>
-
-**Automatización**<br>
-<img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white"/>
-<img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white"/>
-<img src="https://img.shields.io/badge/Discord.py-5865F2?style=for-the-badge&logo=discord&logoColor=white"/>
-
-**Deploy y calidad**<br>
-<img src="https://skillicons.dev/icons?i=git,github,githubactions,vscode&theme=dark"/><br>
-<img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black"/>
-<img src="https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white"/>
-<img src="https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white"/>
+<img src="img/stack.png" alt="Python, JavaScript, Flask, PostgreSQL, pandas, SciPy, OpenCV, Render, GitHub Actions, pytest, Playwright" width="100%"/>
 
 ---
 
@@ -193,8 +158,8 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
 ¿Un proyecto con datos, un modelo que hay que llevar a producción o una automatización? Escríbeme.
 
 <p>
-  <a href="mailto:wualters.dev@gmail.com"><img src="https://img.shields.io/badge/wualters.dev@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0F1420" alt="Correo"/></a>
-  <a href="https://instrumentoapp.com"><img src="https://img.shields.io/badge/instrumentoapp.com-C6F432?style=for-the-badge&logo=googlechrome&logoColor=0F1420&labelColor=0F1420" alt="Instrumento"/></a>
+  <a href="mailto:wualters.dev@gmail.com"><img src="img/btn-correo.png" height="44" alt="wualters.dev@gmail.com"/></a>
+  <a href="https://instrumentoapp.com"><img src="img/btn-web.png" height="44" alt="instrumentoapp.com"/></a>
 </p>
 
 ---
@@ -205,16 +170,11 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
 
 <br>
 
-**Python developer from Cusco, Peru.** I build complete products: from the statistical model to the server, the UI, the tests and the billing. Reach me at **[wualters.dev@gmail.com](mailto:wualters.dev@gmail.com)**.
+**Python developer from Cusco, Peru.** I build complete products: from the statistical model to the server, the UI, the tests and the deployment. Reach me at **[wualters.dev@gmail.com](mailto:wualters.dev@gmail.com)**.
 
-**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, measures closing-line value, retrains itself daily and runs a weekly self-improvement loop that only ships changes that beat the current model on unseen matches, and tracks calibration and yield for every saved pick — with a public, verifiable track record. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as an installable PWA, with a Free/Pro plan and CI running pytest + Playwright on every PR. **[Try it live →](https://instrumentoapp.com)**
+**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, measures closing-line value, retrains itself daily and runs a weekly self-improvement loop that only ships changes that beat the current model on unseen matches, and tracks calibration and yield for every saved pick — with a public, verifiable track record. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as a free installable PWA, with CI running pytest + Playwright on every PR. **[Try it live →](https://instrumentoapp.com)**
 
 **🏇 Umapyoi AutoReroll** — a desktop bot that automates rerolling in Umamusume Global using OpenCV and Tesseract OCR to detect target SSR cards, with Discord webhook notifications and an English/Spanish UI.
 
 </details>
 
----
-
-<div align="center">
-  <img src="https://komarev.com/ghpvc/?username=WualterSDEV&style=for-the-badge&color=FF5A1F" alt="Visitas al perfil"/>
-</div>
