@@ -1,0 +1,21 @@
+{
+ "css3": "1572B6",
+ "discord": "5865F2",
+ "flask": "000000",
+ "git": "F05032",
+ "githubactions": "2088FF",
+ "html5": "E34F26",
+ "javascript": "F7DF1E",
+ "numpy": "013243",
+ "opencv": "5C3EE8",
+ "pandas": "150458",
+ "postgresql": "4169E1",
+ "pwa": "5A0FC8",
+ "pytest": "0A9EDC",
+ "python": "3776AB",
+ "render": "000000",
+ "ruff": "D7FF64",
+ "scipy": "8CAAE6",
+ "selenium": "43B02A",
+ "sqlite": "003B57"
+}
