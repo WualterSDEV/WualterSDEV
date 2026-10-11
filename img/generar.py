@@ -1,7 +1,7 @@
 """Genera las imágenes del perfil. Todas se guardan en el repo para que carguen
 siempre, también en la app de GitHub del celular (los badges externos a veces
 fallan). Identidad propia del perfil: fondo tinta, violeta y cian de acento,
-títulos en Space Grotesk y texto en Inter. Todo en la misma paleta.
+títulos en Space Grotesk y texto en Inter. Cada app conserva su color dentro de su tarjeta.
 
 Las tarjetas con texto se diseñan a 820 px de ancho y se guardan al doble: en
 un celular se ven a ~45% y la letra sigue legible.
@@ -14,7 +14,8 @@ un celular se ven a ~45% y la letra sigue legible.
   img/flujo.png       cómo funciona por dentro (línea de pasos)
   img/pantallas.jpg   seis pantallas de la app (3 x 2)
   img/stack.png       tecnologías con sus logos
-  img/btn-*.png       botones
+  img/app-*.png       encabezado de la sección de cada app, con su color
+  img/btn-*.png       botones (con el color de su app)
 
 Recursos en img/recursos/: íconos Phosphor (MIT) y logos de Simple Icons (CC0).
 Las capturas salen de scripts/capturas_app.py. Uso:
@@ -179,8 +180,7 @@ HABILIDADES = [
 
 def habilidades_html():
     def etiqueta(p):
-        color, fondo = (("var(--hi)", "rgba(157,140,255,.14)") if p == "Instrumento"
-                        else ("var(--cian)", "rgba(61,217,235,.12)"))
+        color, fondo = COLOR[p], _rgba(COLOR[p], .12)
         return (f'<span style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:{color};background:{fondo};'
                 f'padding:4px 9px;border-radius:999px">{p.upper()}</span>')
     tarjetas = "".join(
@@ -243,48 +243,90 @@ def _chips(lista, alto=18):
                    f'{_marca(m, alto) if m else ""}{t}</span>' for m, t in lista)
 
 
-def proyectos_html():
-    cifras = "".join(f'<div style="flex:1;background:var(--soft);border-radius:12px;padding:10px 12px">'
-                     f'<div class="d g" style="font-size:30px;font-weight:700;line-height:1">{n}</div>'
-                     f'<div style="font-size:12px;font-weight:700;color:var(--mut);margin-top:4px;line-height:1.3">{t}</div></div>'
-                     for n, t in (("300+", "PRs en<br>6 semanas"), ("~770", "pruebas por<br>cambio"),
-                                  ("28", "ligas y<br>copas")))
+# Cada app conserva su propio color (el de su marca) dentro del marco neutro del perfil.
+# Para sumar una app nueva: agregar un diccionario aquí (clave = nombre de archivo),
+# sus botones en BOTONES y correr este script. Los pasos completos están en docs/agregar-app.md.
+PROYECTOS = [
+    dict(clave="instrumento", nombre="Instrumento", color="#C6F432", icono="ph:soccer-ball", seccion=True,
+         tipo="DESTACADO · APP WEB", lema="Pronósticos de fútbol con un modelo real",
+         texto="Pronósticos de fútbol con un modelo estadístico real. Gratis, en PC y celular, y publica cuánto acierta.",
+         cifras=[("300+", "PRs en<br>6 semanas"), ("~770", "pruebas por<br>cambio"), ("28", "ligas y<br>copas")],
+         chips=[("python", "Python"), ("flask", "Flask"), ("postgresql", "PostgreSQL"), ("scipy", "SciPy"), ("javascript", "JS")],
+         pie='<span style="color:var(--vivo)">●</span> En producción · instrumentoapp.com'),
+    dict(clave="umapyoi", nombre="Umapyoi AutoReroll", color="#FF8FB8", icono="🏇",
+         tipo="AUTOMATIZACIÓN · ESCRITORIO", lema="El reroll de Umamusume Global, en automático",
+         texto="Bot que hace solo el reroll de Umamusume Global: crea el perfil, reclama recompensas, tira el gacha "
+               "y detecta las cartas SSR con visión por computadora. Avisa por Discord.",
+         cifras=[],
+         chips=[("python", "Python"), ("opencv", "OpenCV"), (None, "Tesseract OCR"), (None, "Tkinter"), ("discord", "Discord")],
+         pie='<i class="ph ph-lock-key"></i> Repositorio privado'),
+]
+COLOR = {p["nombre"].split()[0]: p["color"] for p in PROYECTOS}     # «Instrumento», «Umapyoi»
 
-    def tarjeta(icono, color, fondo, tipo, nombre, texto, extra, chips, pie):
-        return f"""<div class=card style="padding:24px;display:flex;flex-direction:column">
-  <div style="display:flex;align-items:center;gap:14px">
-    <div style="width:62px;height:62px;border-radius:18px;display:grid;place-items:center;font-size:34px;flex:none;
-         color:{color};background:{fondo};border:1.5px solid {color}55">{icono}</div>
-    <div><div style="font-size:11px;font-weight:800;letter-spacing:2px;color:{color}">{tipo}</div>
-      <div class=d style="font-size:32px;font-weight:800;line-height:1;margin-top:4px">{nombre}</div></div></div>
-  <div style="font-size:16.5px;font-weight:600;color:var(--tx2);margin-top:16px;line-height:1.45">{texto}</div>
-  {extra}
-  <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:16px">{chips}</div>
-  <div style="margin-top:auto;padding-top:18px;font-size:14px;font-weight:700;color:var(--mut)">{pie}</div>
+
+def _rgba(color, a):
+    r, g, b = (int(color[i:i + 2], 16) for i in (1, 3, 5))
+    return f"rgba({r},{g},{b},{a})"
+
+
+def _icono(p, tam):
+    i = p["icono"]
+    return f'<i class="ph ph-{i[3:]}"></i>' if i.startswith("ph:") else i
+
+
+def _sello(p, lado=62, radio=18, letra=34):
+    c = p["color"]
+    return (f'<div style="width:{lado}px;height:{lado}px;border-radius:{radio}px;display:grid;place-items:center;'
+            f'font-size:{letra}px;flex:none;color:{c};background:{_rgba(c, .12)};border:1.5px solid {_rgba(c, .4)}">'
+            f'{_icono(p, letra)}</div>')
+
+
+def _tarjeta(p):
+    c = p["color"]
+    cifras = "".join(f'<div style="flex:1;background:var(--soft);border-radius:12px;padding:10px 12px">'
+                     f'<div class=d style="font-size:30px;font-weight:700;line-height:1;color:{c}">{n}</div>'
+                     f'<div style="font-size:12px;font-weight:700;color:var(--mut);margin-top:4px;line-height:1.3">{t}</div></div>'
+                     for n, t in p["cifras"])
+    cifras = f'<div style="display:flex;gap:8px;margin-top:16px">{cifras}</div>' if cifras else ""
+    return f"""<div class=card style="padding:24px;display:flex;flex-direction:column;position:relative;overflow:hidden;
+     border-top:3px solid {c}">
+  <div style="position:absolute;width:320px;height:320px;right:-160px;top:-180px;border-radius:50%;
+       background:radial-gradient(circle,{_rgba(c, .16)},transparent 65%)"></div>
+  <div style="display:flex;align-items:center;gap:14px;position:relative">{_sello(p)}
+    <div><div style="font-size:11px;font-weight:800;letter-spacing:2px;color:{c}">{p["tipo"]}</div>
+      <div class=d style="font-size:32px;font-weight:700;line-height:1;margin-top:4px">{p["nombre"]}</div></div></div>
+  <div style="font-size:16.5px;font-weight:600;color:var(--tx2);margin-top:16px;line-height:1.45">{p["texto"]}</div>
+  {cifras}
+  <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:16px">{_chips(p["chips"])}</div>
+  <div style="margin-top:auto;padding-top:18px;font-size:14px;font-weight:700;color:var(--mut)">{p["pie"]}</div>
 </div>"""
-    instrumento = tarjeta(
-        '<i class="ph ph-soccer-ball"></i>', "#9D8CFF", "rgba(157,140,255,.12)", "DESTACADO · APP WEB", "Instrumento",
-        "Pronósticos de fútbol con un modelo estadístico real. Gratis, en PC y celular, y publica cuánto acierta.",
-        f'<div style="display:flex;gap:8px;margin-top:16px">{cifras}</div>',
-        _chips([("python", "Python"), ("flask", "Flask"), ("postgresql", "PostgreSQL"), ("scipy", "SciPy"), ("javascript", "JS")]),
-        '<span style="color:var(--vivo)">●</span> En producción · instrumentoapp.com')
-    umapyoi = tarjeta(
-        "🏇", "#3DD9EB", "rgba(61,217,235,.12)", "AUTOMATIZACIÓN · ESCRITORIO", "Umapyoi AutoReroll",
-        "Bot que hace solo el reroll de Umamusume Global: crea el perfil, reclama recompensas, tira el gacha "
-        "y detecta las cartas SSR con visión por computadora. Avisa por Discord.",
-        "",
-        _chips([("python", "Python"), ("opencv", "OpenCV"), (None, "Tesseract OCR"), (None, "Tkinter"), ("discord", "Discord")]),
-        '<i class="ph ph-lock-key"></i> Repositorio privado')
+
+
+def proyectos_html():
     return _pagina(f"""<div class=kicker><i class=punto></i>PORTAFOLIO</div>
 <div class=titulo>Mis <b>proyectos</b></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px">{instrumento}{umapyoi}</div>""")
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px">{"".join(map(_tarjeta, PROYECTOS))}</div>""")
 
 
-# nombre, texto, principal (lima) o no
+def cabecera_html(p):
+    """Encabezado de la sección de cada app en el README, con su color."""
+    c = p["color"]
+    return f"""<div class=marco style="padding:26px 36px">
+<div style="position:absolute;width:700px;height:700px;right:-300px;top:-420px;border-radius:50%;
+     background:radial-gradient(circle,{_rgba(c, .16)},transparent 62%)"></div><div class=grid></div>
+<div style="position:relative;display:flex;align-items:center;gap:20px;padding-left:18px;border-left:4px solid {c}">
+  {_sello(p, 74, 20, 40)}
+  <div><div style="font-size:13px;font-weight:800;letter-spacing:2.5px;color:{c}">{p["tipo"]}</div>
+    <div class=d style="font-size:46px;font-weight:700;line-height:1;margin-top:4px">{p["nombre"]}</div>
+    <div style="font-size:18px;font-weight:600;color:var(--tx2);margin-top:6px">{p["lema"]}</div></div>
+</div></div>"""
+
+
+# archivo, texto, app (su color) y si es el botón principal
 BOTONES = [
-    ("app", "Abrir la app", True),
-    ("aciertos", "Aciertos públicos", False),
-    ("como", "Cómo funciona", False),
+    ("app", "Abrir la app", "instrumento", True),
+    ("aciertos", "Aciertos públicos", "instrumento", False),
+    ("como", "Cómo funciona", "instrumento", False),
 ]
 
 
@@ -299,7 +341,7 @@ def _marco_tel(img, ancho, extra=""):
 
 def hero_html():
     return f"""<div style="position:relative;width:1700px;height:930px;overflow:hidden">
-<div class=glow style="right:-300px;top:-500px;width:1100px;height:1100px"></div><div class=grid></div>
+<div class=glow style="right:-300px;top:-500px;width:1100px;height:1100px;background:radial-gradient(circle,{_rgba(PROYECTOS[0]["color"], .14)},transparent 62%)"></div><div class=grid></div>
 <div style="position:absolute;left:70px;top:60px;width:1260px;border-radius:22px;background:#000;padding:12px;
             box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 2px var(--line2)">
   <div style="border-radius:12px;overflow:hidden"><img src="{_uri(CAPTURAS / 'pc-partidos.png')}" style="width:100%;display:block"></div>
@@ -317,16 +359,17 @@ def pantallas_html():
                      f'<div class=d style="margin-top:26px;font-weight:700;font-size:64px;color:var(--tx)">{e}</div></div>'
                      for a, e in PANTALLAS)
     return (f'<div style="position:relative;width:1620px;height:2200px;overflow:hidden">'
-            f'<div class=glow style="width:1100px;height:1100px"></div><div class=grid></div>'
+            f'<div class=glow style="width:1100px;height:1100px;background:radial-gradient(circle,{_rgba(PROYECTOS[0]["color"], .14)},transparent 62%)"></div><div class=grid></div>'
             f'<div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,400px);'
             f'justify-content:center;column-gap:90px;row-gap:70px;padding-top:60px">{celdas}</div></div>')
 
 
 def botones(b, css):
     pg = b.new_page(viewport={"width": 900, "height": 120}, device_scale_factor=2)
-    for nombre, texto, principal in BOTONES:
-        estilo = ("background:linear-gradient(100deg,#9D8CFF,#3DD9EB);color:#0A0B14" if principal else
-                  "background:#121427;color:#EEF0FF;box-shadow:inset 0 0 0 2px #323759")
+    color = {p["clave"]: p["color"] for p in PROYECTOS}
+    for nombre, texto, app, principal in BOTONES:
+        estilo = (f"background:{color[app]};color:#0A0B14" if principal else
+                  f"background:#121427;color:#EEF0FF;box-shadow:inset 0 0 0 2px {_rgba(color[app], .45)}")
         pg.set_content(f"<html><head><meta charset=utf-8><style>{css}*{{margin:0}}body{{background:transparent}}"
                        f"b{{display:inline-block;font:700 19px Texto;letter-spacing:.3px;padding:13px 26px;"
                        f"border-radius:999px;{estilo}}}</style></head>"
@@ -363,6 +406,8 @@ def main():
                              ("habilidades.png", habilidades_html()), ("flujo.png", flujo_html()),
                              ("stack.png", stack_html()), ("proyectos.png", proyectos_html())):
             _png(_foto(b, css, html, 820), nombre)
+        for p in (p for p in PROYECTOS if p.get("seccion")):   # solo las apps con sección propia
+            _png(_foto(b, css, cabecera_html(p), 820), f"app-{p['clave']}.png")
         # JPEG: son capturas, en PNG pesan tres veces más
         _foto(b, css, hero_html(), 1700, 1).save(IMG / "hero.jpg", quality=86, optimize=True, progressive=True)
         _foto(b, css, pantallas_html(), 1620, 1).save(IMG / "pantallas.jpg", quality=84, optimize=True, progressive=True)

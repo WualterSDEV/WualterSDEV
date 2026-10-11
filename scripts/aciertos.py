@@ -18,7 +18,7 @@ URLS = [os.environ.get("URL_PORTADA") or "https://instrumentoapp.com/api/publico
         "https://app-z8g3.onrender.com/api/publico/portada"]
 PICKS_MINIMOS = 20
 MESES = "ene feb mar abr may jun jul ago sep oct nov dic".split()
-FUENTE = "Inter,'Segoe UI',Helvetica,Arial,sans-serif"
+FUENTE = "'Segoe UI',Manrope,Inter,Helvetica,Arial,sans-serif"
 
 
 def traer():
@@ -52,27 +52,26 @@ def svg(datos, ahora):
  font-family="{FUENTE}" role="img" aria-label="Aciertos de Instrumento">
 <defs>
   <radialGradient id="g1" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="1" gradientTransform="translate(1150 0) scale(700)">
-    <stop offset="0" stop-color="#9D8CFF" stop-opacity=".18"/><stop offset="1" stop-color="#9D8CFF" stop-opacity="0"/></radialGradient>
-  <linearGradient id="g2" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#9D8CFF"/><stop offset="1" stop-color="#3DD9EB"/></linearGradient>
+    <stop offset="0" stop-color="#C6F432" stop-opacity=".14"/><stop offset="1" stop-color="#C6F432" stop-opacity="0"/></radialGradient>
   <clipPath id="c"><rect width="1200" height="520" rx="28"/></clipPath>
 </defs>
 <g clip-path="url(#c)">
 <rect width="1200" height="520" fill="#0A0B14"/><rect width="1200" height="520" fill="url(#g1)"/>
 <rect x="1" y="1" width="1198" height="518" rx="27" fill="none" stroke="#323759" stroke-width="2"/>
-<circle cx="64" cy="66" r="8" fill="#9D8CFF"/>
+<circle cx="64" cy="66" r="8" fill="#C6F432"/>
 <text x="86" y="76" font-size="28" font-weight="700" letter-spacing="3" fill="#EEF0FF">ACIERTOS EN VIVO</text>
 <text x="1140" y="76" font-size="24" fill="#8F95BA" text-anchor="end">{escape(fecha)}</text>
 """]
     if medido:
         sub = f"{ok} de {n} picks" + (f" · {dias} días" if dias else "")
-        partes.append(f"""<text x="52" y="260" font-size="190" font-weight="800" letter-spacing="-8" fill="url(#g2)">{pct}%</text>
+        partes.append(f"""<text x="52" y="260" font-size="190" font-weight="800" letter-spacing="-8" fill="#C6F432">{pct}%</text>
 <text x="58" y="320" font-size="36" font-weight="700" fill="#EEF0FF">de acierto en los picks</text>
 <text x="58" y="364" font-size="28" fill="#8F95BA">{escape(sub)}</text>
 <rect x="58" y="392" width="440" height="14" rx="7" fill="#FFFFFF" fill-opacity=".08"/>
-<rect x="58" y="392" width="{round(440 * pct / 100)}" height="14" rx="7" fill="url(#g2)"/>
+<rect x="58" y="392" width="{round(440 * pct / 100)}" height="14" rx="7" fill="#C6F432"/>
 """)
     else:
-        partes.append(f"""<text x="58" y="230" font-size="84" font-weight="800" fill="url(#g2)">Midiendo…</text>
+        partes.append(f"""<text x="58" y="230" font-size="84" font-weight="800" fill="#C6F432">Midiendo…</text>
 <text x="58" y="290" font-size="34" font-weight="700" fill="#EEF0FF">{n} picks medidos</text>
 <text x="58" y="336" font-size="26" fill="#8F95BA">el % aparece con {PICKS_MINIMOS}: con pocos casos engaña</text>
 """)
@@ -83,7 +82,7 @@ def svg(datos, ahora):
     for i, r in enumerate(recientes):
         y = 120 + i * 104
         bien = r["pick"].get("ok")
-        color, signo = ("#3DD9EB", "✓") if bien else ("#FF8076", "✗")
+        color, signo = ("#C6F432", "✓") if bien else ("#FF8076", "✗")
         partido = f"{corto(r.get('local'), 14)} {r.get('marcador', '')} {corto(r.get('visitante'), 14)}"
         partes.append(f"""<rect x="560" y="{y}" width="580" height="90" rx="16" fill="#121427" stroke="#242845" stroke-width="2"/>
 <circle cx="604" cy="{y + 45}" r="22" fill="{color}" fill-opacity=".16"/>

@@ -4,7 +4,7 @@ Construyo productos de datos de punta a punta: modelos estadísticos, apps web y
 
 <img src="img/proyectos.png" alt="Mis proyectos: Instrumento, app web de pronósticos de fútbol en producción, y Umapyoi AutoReroll, bot de escritorio con visión por computadora" width="100%"/>
 
-## Instrumento
+<img src="img/app-instrumento.png" alt="Instrumento · Pronósticos de fútbol con un modelo real" width="100%"/>
 
 App web gratis de pronósticos de fútbol: calcula la probabilidad de cada resultado con un modelo estadístico, guarda cada pick antes del partido y publica cuánto acierta, incluidos los que fallan.
 
