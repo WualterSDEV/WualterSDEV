@@ -6,14 +6,14 @@ importante y títulos en Barlow Condensed.
 Las tarjetas con texto se diseñan a 820 px de ancho y se guardan al doble: en
 un celular se ven a ~45% y la letra sigue legible.
 
-  img/banner.png      encabezado con los números de Instrumento
+  img/banner.png      encabezado: quién soy y qué hago
   img/hero.jpg        Instrumento en PC y en el celular
   img/funciones.png   qué hace la app (6 tarjetas)
-  img/retos.png       retos técnicos resueltos (problema → solución)
+  img/proyectos.png   mis proyectos (Instrumento y Umapyoi)
+  img/habilidades.png lo que sé resolver, cada habilidad con su prueba
   img/flujo.png       cómo funciona por dentro (línea de pasos)
   img/pantallas.jpg   seis pantallas de la app (3 x 2)
   img/stack.png       tecnologías con sus logos
-  img/umapyoi.png     tarjeta de Umapyoi AutoReroll
   img/btn-*.png       botones
 
 Recursos en img/recursos/: íconos Phosphor (MIT) y logos de Simple Icons (CC0).
@@ -103,40 +103,39 @@ def _pagina(contenido):
     return f'<div class=marco><div class=glow></div><div class=grid></div><div style="position:relative">{contenido}</div></div>'
 
 
+AREAS = [("chart-line-up", "Modelos de datos"), ("devices", "Apps web"), ("robot", "Automatización")]
+
+
 def banner_html():
-    stats = [("300+", "pull requests<br>en 6 semanas"), ("~770", "pruebas en<br>cada cambio"), ("28", "competiciones<br>con datos")]
-    barras = [("52%", "Local", True), ("27%", "Empate", False), ("21%", "Visita", False)]
+    areas = "".join(f'<div class=card style="padding:12px 14px;border-radius:14px;display:flex;align-items:center;gap:10px">'
+                    f'<i class="ph ph-{i}" style="font-size:24px;color:var(--hi)"></i>'
+                    f'<span style="font-size:15px;font-weight:800">{t}</span></div>' for i, t in AREAS)
+    k, s, f, c = ("color:#C792EA", "color:#C6F432", "color:#82AAFF", "color:#6B736C")
+    codigo = f"""<span style="{k}">class</span> <span style="{f}">Wualter</span>:
+    base  = <span style="{s}">"Cusco, Perú"</span>
+    hace  = [<span style="{s}">"datos"</span>, <span style="{s}">"web"</span>, <span style="{s}">"bots"</span>]
+    stack = [<span style="{s}">"Python"</span>, <span style="{s}">"SQL"</span>, <span style="{s}">"JS"</span>]
+    <span style="{k}">def</span> <span style="{f}">ahora</span>(self):
+        <span style="{k}">return</span> <span style="{s}">"Instrumento"</span>"""
     return f"""<div class=marco style="padding:46px 44px 44px;height:470px">
 <div class=glow style="right:-300px;top:-460px"></div><div class=grid></div>
 <div style="position:relative">
   <div class=kicker><i class=punto></i>DESARROLLADOR PYTHON · CUSCO, PERÚ</div>
   <div class=d style="font-size:108px;font-weight:800;letter-spacing:1px;line-height:.9;margin-top:16px">Wualter<span style="color:var(--hi)">S</span></div>
-  <div style="font-size:25px;font-weight:700;color:var(--tx2);margin-top:14px;max-width:470px;line-height:1.3">
-    Modelos estadísticos llevados a producción</div>
-  <div style="display:flex;gap:12px;margin-top:30px">
-    {"".join(f'<div class=card style="padding:14px 18px;border-radius:16px;min-width:150px"><div class=d style="font-size:44px;font-weight:800;line-height:1;color:var(--hi)">{n}</div><div style="font-size:14px;font-weight:700;color:var(--mut);margin-top:6px;line-height:1.3">{t}</div></div>' for n, t in stats)}
-  </div>
+  <div style="font-size:24px;font-weight:700;color:var(--tx2);margin-top:14px;max-width:440px;line-height:1.3">
+    Construyo productos de datos de punta a punta</div>
+  <div style="display:flex;gap:10px;margin-top:30px">{areas}</div>
 </div>
-<div class=card style="position:absolute;right:44px;top:66px;width:250px;padding:20px;transform:rotate(3deg);
+<div class=card style="position:absolute;right:40px;top:40px;width:290px;transform:rotate(2.5deg);overflow:hidden;
      box-shadow:0 30px 60px rgba(0,0,0,.55)">
-  <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--mut)">
-    <span>Liga 1 · 18:03</span><span style="color:var(--hi)">● Datos sólidos</span></div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin:18px 4px 16px">
-    <div style="text-align:center"><div style="width:46px;height:46px;border-radius:50%;background:var(--soft);
-      border:1.5px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:14px;margin:auto">CI</div>
-      <div style="font-size:12px;font-weight:700;margin-top:6px">Cienciano</div></div>
-    <div style="font-size:11px;font-weight:800;color:var(--mut)">VS</div>
-    <div style="text-align:center"><div style="width:46px;height:46px;border-radius:50%;background:var(--soft);
-      border:1.5px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:14px;margin:auto">ME</div>
-      <div style="font-size:12px;font-weight:700;margin-top:6px">Melgar</div></div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
-    {"".join(f'<div style="border-radius:10px;padding:8px 0;text-align:center;border:1.5px solid {"var(--hi)" if on else "var(--line)"};background:{"rgba(198,244,50,.12)" if on else "var(--soft)"}"><div style="font-size:20px;font-weight:800;color:{"var(--hi)" if on else "var(--tx)"}">{p}</div><div style="font-size:10px;font-weight:700;color:var(--mut)">{t}</div></div>' for p, t, on in barras)}
-  </div>
-  <div style="margin-top:14px;padding:10px 12px;border-radius:10px;background:var(--soft);font-size:12px;font-weight:700">
-    <span style="color:var(--hi)">✓</span> Menos de 2.5 goles <span style="float:right;color:var(--hi)">78%</span></div>
+  <div style="display:flex;align-items:center;gap:6px;padding:11px 14px;border-bottom:1.5px solid var(--line);background:var(--soft)">
+    <i style="width:10px;height:10px;border-radius:50%;background:#FF8076"></i>
+    <i style="width:10px;height:10px;border-radius:50%;background:#F2C94C"></i>
+    <i style="width:10px;height:10px;border-radius:50%;background:var(--hi)"></i>
+    <span style="font-family:Mono;font-size:12px;color:var(--mut);margin-left:8px">wualter.py</span></div>
+  <pre style="font-family:Mono;font-size:12.5px;line-height:1.6;padding:14px 16px;color:var(--tx);white-space:pre">{codigo}</pre>
 </div>
-<div class=card style="position:absolute;right:58px;top:372px;width:230px;padding:12px 16px;transform:rotate(-2deg);
+<div class=card style="position:absolute;right:66px;top:368px;width:240px;padding:12px 16px;transform:rotate(-2deg);
      box-shadow:0 30px 60px rgba(0,0,0,.55);display:flex;align-items:center;gap:10px">
   <i style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--hi);box-shadow:0 0 12px var(--hi)"></i>
   <div><div style="font-size:11px;font-weight:800;letter-spacing:2px;color:var(--mut)">EN PRODUCCIÓN</div>
@@ -166,37 +165,32 @@ def funciones_html():
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px">{tarjetas}</div>""")
 
 
-RETOS = [
-    ("Un servidor que se caía sin avisar",
-     "Reentrenar dentro del proceso web pasaba los 512 MB del servidor y la instancia moría sin error ni log.",
-     "Las tareas pesadas corren en un proceso hijo: al terminar, el sistema operativo recupera toda su memoria."),
-    ("Mercados que nunca se contradicen",
-     "«Gana Nice» y «Strasbourg o empate» llegaron a mostrarse a la vez: cada mercado se calculaba por su lado.",
-     "Todos salen de una sola matriz de marcadores, y cada ajuste reparte la matriz entera."),
-    ("Push sin dependencias frágiles",
-     "La librería habitual de Web Push no compilaba en todos los entornos.",
-     "Cifrado RFC 8291 y firma VAPID (RFC 8292) implementados a mano con cryptography."),
-    ("Un historial que no se puede maquillar",
-     "Recalcular partidos jugados con el modelo de hoy inflaría los aciertos: ya vio el resultado.",
-     "Cada pick se guarda antes del partido y no se toca más. Sin % hasta tener 20 picks."),
-    ("Un modelo que se mejora sin romperse",
-     "Cambiar el modelo a ojo puede empeorarlo sin que nadie lo note.",
-     "Cada semana los ajustes compiten en walk-forward con el modelo en uso; solo entra el que gana claro."),
+# ícono, habilidad, prueba concreta, proyecto
+HABILIDADES = [
+    ("chart-line-up", "Modelos estadísticos", "Dixon-Coles y Binomial Negativa. Todos los mercados salen de una sola matriz de marcadores, así nunca se contradicen.", "Instrumento"),
+    ("shield-check", "Validación honesta", "Backtest walk-forward: un ajuste entra solo si gana. Cada pick se guarda antes del partido y no se toca más.", "Instrumento"),
+    ("cpu", "Servidores estables", "Las tareas pesadas corren en un proceso hijo para no pasar el límite de memoria; el sistema la recupera entera.", "Instrumento"),
+    ("lock-key", "Criptografía aplicada", "Cifrado de Web Push (RFC 8291) y firma VAPID (RFC 8292) implementados a mano con cryptography.", "Instrumento"),
+    ("eye", "Visión por computadora", "OpenCV y Tesseract leen la pantalla del juego y detectan las cartas SSR objetivo.", "Umapyoi"),
+    ("heartbeat", "Automatización vigilada", "Tareas de fondo diarias que reportan su latido y avisan por Telegram si una se cae.", "Instrumento"),
 ]
 
 
-def retos_html():
-    filas = "".join(f"""<div class=card style="padding:24px 24px 22px;display:flex;gap:20px">
-  <div class=d style="font-size:54px;font-weight:800;color:var(--hi);line-height:.9;width:62px;flex:none">{n:02d}</div>
-  <div><div style="font-size:25px;font-weight:800">{t}</div>
-    <div style="display:flex;gap:12px;margin-top:12px;font-size:18px;line-height:1.45;color:var(--tx2)">
-      <span style="flex:none;font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--neg);padding-top:4px;width:84px">PROBLEMA</span><span>{p}</span></div>
-    <div style="display:flex;gap:12px;margin-top:8px;font-size:18px;line-height:1.45;color:var(--tx)">
-      <span style="flex:none;font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--hi);padding-top:4px;width:84px">SOLUCIÓN</span><span>{s}</span></div>
-  </div></div>""" for n, (t, p, s) in enumerate(RETOS, 1))
-    return _pagina(f"""<div class=kicker><i class=punto></i>INGENIERÍA</div>
-<div class=titulo>Retos técnicos <b>que resolví</b></div>
-<div style="display:flex;flex-direction:column;gap:14px;margin-top:26px">{filas}</div>""")
+def habilidades_html():
+    def etiqueta(p):
+        color, fondo = (("var(--hi)", "rgba(198,244,50,.10)") if p == "Instrumento"
+                        else ("var(--visita)", "rgba(142,156,240,.12)"))
+        return (f'<span style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:{color};background:{fondo};'
+                f'padding:4px 9px;border-radius:999px">{p.upper()}</span>')
+    tarjetas = "".join(
+        f'<div class=card style="padding:22px"><div style="display:flex;justify-content:space-between;align-items:flex-start">'
+        f'<div class=ico><i class="ph ph-{i}"></i></div>{etiqueta(pr)}</div>'
+        f'<div style="font-size:23px;font-weight:800;margin-top:16px">{t}</div>'
+        f'<div style="font-size:17px;font-weight:600;color:var(--tx2);margin-top:6px;line-height:1.45">{d}</div></div>'
+        for i, t, d, pr in HABILIDADES)
+    return _pagina(f"""<div class=kicker><i class=punto></i>HABILIDADES CON PRUEBA</div>
+<div class=titulo>Lo que sé <b>resolver</b></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px">{tarjetas}</div>""")
 
 
 FLUJO = [
@@ -243,22 +237,46 @@ def stack_html():
 <div class=titulo>Mi <b>stack</b></div>{grupos}""")
 
 
-def umapyoi_html():
-    chips = "".join(f"<span class=chip>{_marca(m, 20) if m else ''}{t}</span>" for m, t in
-                    [("python", "Python"), ("opencv", "OpenCV"), (None, "Tesseract OCR"), (None, "Tkinter"),
-                     ("discord", "Webhooks de Discord")])
-    return _pagina(f"""<div class=kicker><i class=punto style="background:var(--visita)"></i>OTRO PROYECTO · AUTOMATIZACIÓN</div>
-<div class=card style="padding:26px;margin-top:18px;display:flex;gap:22px;align-items:flex-start">
-  <div style="width:96px;height:96px;border-radius:24px;display:grid;place-items:center;font-size:58px;flex:none;
-       background:rgba(142,156,240,.12);border:1.5px solid rgba(142,156,240,.35)">🏇</div>
-  <div><div class=d style="font-size:46px;font-weight:800;line-height:.95">Umapyoi AutoReroll</div>
-    <div style="font-size:18px;font-weight:600;color:var(--tx2);margin-top:10px;line-height:1.45">
-      Bot de escritorio para Umamusume Global: acepta términos, crea el perfil, reclama recompensas, tira el gacha
-      y detecta las cartas SSR objetivo con visión por computadora. Avisa por Discord, en español e inglés.</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">{chips}</div>
-    <div style="margin-top:14px;font-size:14px;font-weight:700;color:var(--mut)"><i class="ph ph-lock-key"></i> Repositorio privado</div>
-  </div>
-</div>""")
+def _chips(lista, alto=18):
+    return "".join(f'<span class=chip style="font-size:15px;padding:7px 12px;gap:7px">'
+                   f'{_marca(m, alto) if m else ""}{t}</span>' for m, t in lista)
+
+
+def proyectos_html():
+    cifras = "".join(f'<div style="flex:1;background:var(--soft);border-radius:12px;padding:10px 12px">'
+                     f'<div class=d style="font-size:30px;font-weight:800;line-height:1;color:var(--hi)">{n}</div>'
+                     f'<div style="font-size:12px;font-weight:700;color:var(--mut);margin-top:4px;line-height:1.3">{t}</div></div>'
+                     for n, t in (("300+", "PRs en<br>6 semanas"), ("~770", "pruebas por<br>cambio"),
+                                  ("28", "ligas y<br>copas")))
+
+    def tarjeta(icono, color, fondo, tipo, nombre, texto, extra, chips, pie):
+        return f"""<div class=card style="padding:24px;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="width:62px;height:62px;border-radius:18px;display:grid;place-items:center;font-size:34px;flex:none;
+         color:{color};background:{fondo};border:1.5px solid {color}55">{icono}</div>
+    <div><div style="font-size:11px;font-weight:800;letter-spacing:2px;color:{color}">{tipo}</div>
+      <div class=d style="font-size:32px;font-weight:800;line-height:1;margin-top:4px">{nombre}</div></div></div>
+  <div style="font-size:16.5px;font-weight:600;color:var(--tx2);margin-top:16px;line-height:1.45">{texto}</div>
+  {extra}
+  <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:16px">{chips}</div>
+  <div style="margin-top:auto;padding-top:18px;font-size:14px;font-weight:700;color:var(--mut)">{pie}</div>
+</div>"""
+    instrumento = tarjeta(
+        '<i class="ph ph-soccer-ball"></i>', "#C6F432", "rgba(198,244,50,.10)", "DESTACADO · APP WEB", "Instrumento",
+        "Pronósticos de fútbol con un modelo estadístico real. Gratis, en PC y celular, y publica cuánto acierta.",
+        f'<div style="display:flex;gap:8px;margin-top:16px">{cifras}</div>',
+        _chips([("python", "Python"), ("flask", "Flask"), ("postgresql", "PostgreSQL"), ("scipy", "SciPy"), ("javascript", "JS")]),
+        '<span style="color:var(--hi)">●</span> En producción · instrumentoapp.com')
+    umapyoi = tarjeta(
+        "🏇", "#8E9CF0", "rgba(142,156,240,.12)", "AUTOMATIZACIÓN · ESCRITORIO", "Umapyoi AutoReroll",
+        "Bot que hace solo el reroll de Umamusume Global: crea el perfil, reclama recompensas, tira el gacha "
+        "y detecta las cartas SSR con visión por computadora. Avisa por Discord.",
+        "",
+        _chips([("python", "Python"), ("opencv", "OpenCV"), (None, "Tesseract OCR"), (None, "Tkinter"), ("discord", "Discord")]),
+        '<i class="ph ph-lock-key"></i> Repositorio privado')
+    return _pagina(f"""<div class=kicker><i class=punto></i>PORTAFOLIO</div>
+<div class=titulo>Mis <b>proyectos</b></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px">{instrumento}{umapyoi}</div>""")
 
 
 # nombre, texto, principal (lima) o no
@@ -341,8 +359,8 @@ def main():
         b = p.chromium.launch()
         botones(b, css)
         for nombre, html in (("banner.png", banner_html()), ("funciones.png", funciones_html()),
-                             ("retos.png", retos_html()), ("flujo.png", flujo_html()),
-                             ("stack.png", stack_html()), ("umapyoi.png", umapyoi_html())):
+                             ("habilidades.png", habilidades_html()), ("flujo.png", flujo_html()),
+                             ("stack.png", stack_html()), ("proyectos.png", proyectos_html())):
             _png(_foto(b, css, html, 820), nombre)
         # JPEG: son capturas, en PNG pesan tres veces más
         _foto(b, css, hero_html(), 1700, 1).save(IMG / "hero.jpg", quality=86, optimize=True, progressive=True)
