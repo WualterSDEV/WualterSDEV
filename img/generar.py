@@ -76,8 +76,6 @@ BOTONES = [
     ("app", "Abrir la app", True),
     ("aciertos", "Aciertos públicos", False),
     ("como", "Cómo funciona", False),
-    ("correo", "wualters.dev@gmail.com", True),
-    ("web", "instrumentoapp.com", False),
 ]
 
 

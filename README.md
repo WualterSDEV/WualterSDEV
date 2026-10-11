@@ -2,10 +2,7 @@
 
 Desarrollo productos de datos de punta a punta: el modelo estadístico, el servidor, la interfaz, las pruebas y el despliegue. Hoy construyo **Instrumento**, una app web de pronósticos de fútbol que publica cuánto acierta.
 
-<p>
-  <a href="https://instrumentoapp.com"><img src="img/btn-app.png" height="44" alt="Abrir Instrumento"/></a>
-  <a href="mailto:wualters.dev@gmail.com"><img src="img/btn-correo.png" height="44" alt="Escribir a wualters.dev@gmail.com"/></a>
-</p>
+> **Instrumento en números:** empezó a fines de agosto de 2026 · más de 300 pull requests en 6 semanas · ~770 pruebas automáticas en cada cambio · 28 competiciones
 
 ---
 
@@ -36,7 +33,7 @@ Desarrollo productos de datos de punta a punta: el modelo estadístico, el servi
 
 **Tecnología:** Python 3.11 · Flask · pandas · SciPy · PostgreSQL (Neon) · JavaScript sin frameworks (PWA) · pytest · Playwright · GitHub Actions · Render
 
-**Estado:** en producción en [instrumentoapp.com](https://instrumentoapp.com) · ~770 pruebas automáticas en cada cambio · 28 competiciones · código privado.
+**Estado:** en producción en [instrumentoapp.com](https://instrumentoapp.com) · código privado.
 
 #### Aciertos en vivo
 
@@ -49,6 +46,14 @@ Desarrollo productos de datos de punta a punta: el modelo estadístico, el servi
 <img src="img/pantallas.jpg" alt="Pantallas de Instrumento: Hoy, Partidos, Análisis, En vivo, Combinar y Registro" width="100%"/>
 
 <sub>Interfaz real de la app, mostrada con datos de ejemplo.</sub>
+
+#### Retos técnicos que resolví
+
+- **Un servidor que se caía sin avisar.** Reentrenar dentro del proceso web pasaba los 512 MB del servidor y la instancia moría sin error ni log. Liberar objetos no alcanzaba: el asignador de memoria de Python no devuelve las páginas al sistema. Ahora las tareas pesadas corren en un proceso hijo (`spawn`) y, al terminar, el sistema operativo recupera toda su memoria.
+- **Mercados que nunca se contradicen.** Quién gana, goles y ambos marcan salen de una sola matriz de marcadores. Cuando el modelo se mezcla con el mercado o se calibra por liga, se reparte de nuevo la matriz entera, no cada número por separado.
+- **Notificaciones push sin dependencias frágiles.** La librería habitual no compilaba en todos los entornos, así que implementé el cifrado de Web Push (RFC 8291) y la firma VAPID (RFC 8292) directamente con `cryptography`.
+- **Un historial que no se puede maquillar.** Cada pronóstico se guarda antes del partido y nunca se recalcula con el modelo actual, que ya vio el resultado. Con menos de 20 picks no se muestra ningún %, porque con pocos casos engaña.
+- **Un modelo que se mejora sin romperse.** Cada ajuste candidato compite en walk-forward contra el modelo en uso y solo se aplica si gana con claridad. Si nada gana, todo queda como estaba.
 
 <details>
 <summary><b>Cómo funciona por dentro</b></summary>
@@ -113,23 +118,14 @@ Bot de escritorio que hace solo el reroll del juego: acepta términos, crea el p
 
 ---
 
-## Contacto
-
-¿Un proyecto con datos, un modelo que hay que llevar a producción o una automatización? Escríbeme.
-
-<p>
-  <a href="mailto:wualters.dev@gmail.com"><img src="img/btn-correo.png" height="44" alt="wualters.dev@gmail.com"/></a>
-  <a href="https://instrumentoapp.com"><img src="img/btn-web.png" height="44" alt="instrumentoapp.com"/></a>
-</p>
-
 <details>
 <summary><b>English</b></summary>
 
 <br>
 
-**Python developer from Cusco, Peru.** I build data products end to end: the statistical model, the server, the UI, the tests and the deployment. Contact: [wualters.dev@gmail.com](mailto:wualters.dev@gmail.com).
+**Python developer from Cusco, Peru.** I build data products end to end: the statistical model, the server, the UI, the tests and the deployment.
 
-**Instrumento** ([instrumentoapp.com](https://instrumentoapp.com)) is a free football analytics web app. It prices hundreds of markets per match with statistical models (Dixon-Coles for goals, Negative Binomial for match stats, a Gaussian copula for accumulators), compares them with bookmaker odds, saves every pick before kick-off and publishes its track record, misses included. It retrains daily and runs a weekly self-improvement loop that only ships changes that beat the current model on unseen matches. Built with Flask, pandas, SciPy and PostgreSQL, deployed on Render as an installable PWA, with ~770 automated tests (pytest + Playwright) on every change. Source code is private.
+**Instrumento** ([instrumentoapp.com](https://instrumentoapp.com)) is a free football analytics web app. It prices hundreds of markets per match with statistical models (Dixon-Coles for goals, Negative Binomial for match stats, a Gaussian copula for accumulators), compares them with bookmaker odds, saves every pick before kick-off and publishes its track record, misses included. Started in late August 2026, with 300+ pull requests in six weeks. It retrains daily and runs a weekly self-improvement loop that only ships changes that beat the current model on unseen matches. Built with Flask, pandas, SciPy and PostgreSQL, deployed on Render as an installable PWA, with ~770 automated tests (pytest + Playwright) on every change. Source code is private.
 
 **Umapyoi AutoReroll** is a desktop bot that automates rerolling in Umamusume Global, using OpenCV and Tesseract OCR to detect target SSR cards, with Discord notifications and an English/Spanish UI. Private repository.
 
