@@ -9,6 +9,7 @@
 <p align="center">
   <a href="#-proyectos"><img src="https://img.shields.io/badge/Proyectos-FF5A1F?style=for-the-badge&labelColor=0F1420" alt="Proyectos"/></a>
   <a href="#-stack"><img src="https://img.shields.io/badge/Stack-8593AD?style=for-the-badge&labelColor=0F1420" alt="Stack"/></a>
+  <a href="#-contacto"><img src="https://img.shields.io/badge/Contacto-C6F432?style=for-the-badge&labelColor=0F1420" alt="Contacto"/></a>
   <a href="#-english"><img src="https://img.shields.io/badge/🇺🇸_English-4CAF50?style=for-the-badge&labelColor=0F1420" alt="English"/></a>
 </p>
 
@@ -20,7 +21,7 @@
 - 📐 Me interesa el **modelado estadístico aplicado**: Dixon-Coles, Binomial Negativa, cópulas, calibración y backtesting.
 - 🚀 Me gusta llevar las cosas **a producción**: despliegue en Render, base en Postgres, CI con GitHub Actions y pruebas de interfaz con Playwright.
 - 🤖 Empecé automatizando tareas repetitivas con **visión por computadora y OCR** (ver Umapyoi AutoReroll).
-- 🔭 Ahora mismo: midiendo con datos reales si el xG, el CLV y las bajas de titulares mejoran los pronósticos.
+- 🔁 Ahora mismo: un modelo que **se mejora solo cada semana** y aplica un cambio únicamente si gana contra el actual con partidos ya jugados.
 - 🎮 Fuera del código: videojuegos y mucha música.
 
 <img src="img/codigo.png" alt="class WualterS(Desarrollador)" width="100%"/>
@@ -60,18 +61,19 @@
 |---|---|
 | 📈 **Modelos** | Dixon-Coles para goles (con altitud, lesiones y descanso) · Binomial Negativa para 28 estadísticas (córners, tarjetas, tiros…) · cópula gaussiana para combinadas |
 | ✅ **Validación** | Backtest contra el mercado, calibración y control de falsos descubrimientos (FDR): cada mercado lleva su sello — *ok*, *ajustado* o *ruido* |
-| 🗂️ **Datos** | Ingesta automática de 16 ligas + copas, planteles y mercados de jugador con incertidumbre de minutos |
-| 🧠 **Contra el mercado** | Aprende del xG (goles esperados), mide el CLV de cada pick contra la cuota de cierre y si las bajas de titulares pesan más de lo que el modelo ya espera |
+| 🗂️ **Datos** | Ingesta automática de 28 competiciones (ligas de 9 países, copas y selecciones), planteles y mercados de jugador con incertidumbre de minutos |
+| 🧠 **Contra el mercado** | Aprende del xG (goles esperados), mide el CLV de cada pick contra la cuota de cierre, calibra el 1X2 por liga y descuenta las bajas de titulares |
+| 🔁 **Auto-mejora** | Cada semana prueba 7 ajustes del modelo contra partidos pasados (walk-forward) y aplica solo los que ganan claro; los picks de una liga que fallan se apagan solos |
 | 📱 **Producto** | PWA instalable, picks del día, en vivo con gráfico de presión, combinadas, «¿Cuánto meter?» con el bank del usuario (Kelly fraccionado), registro con yield y calibración, notificaciones push propias (Web Push + VAPID) y referidos |
 | 💳 **Negocio** | Plan gratis / Pro controlado en el servidor, cobro por Yape o Plin y Libro de Reclamaciones virtual |
-| 🛡️ **Calidad** | ~600 pruebas (pytest + Playwright con pantallas reales) en cada PR, ruff, arquitectura por capas vigilada por una prueba, hilos de fondo con semáforo de salud y avisos por Telegram |
+| 🛡️ **Calidad** | ~770 pruebas (pytest + Playwright con pantallas reales) en cada PR, ruff, arquitectura por capas vigilada por una prueba, hilos de fondo con semáforo de salud y avisos por Telegram |
 
 <img src="img/pantallas.png" alt="Pantallas: Hoy, Partidos, Análisis, En vivo, Combinar y Registro" width="100%"/>
 
 <table>
   <tr>
-    <td align="center" width="25%"><h3>~600</h3><sub>pruebas automáticas en cada cambio</sub></td>
-    <td align="center" width="25%"><h3>16 + copas</h3><sub>ligas con datos propios</sub></td>
+    <td align="center" width="25%"><h3>~770</h3><sub>pruebas automáticas en cada cambio</sub></td>
+    <td align="center" width="25%"><h3>28</h3><sub>ligas, copas y selecciones con datos propios</sub></td>
     <td align="center" width="25%"><h3>28</h3><sub>estadísticas por partido modeladas</sub></td>
     <td align="center" width="25%"><h3>100%</h3><sub>de los picks guardados antes del partido</sub></td>
   </tr>
@@ -93,15 +95,37 @@ flowchart LR
     F --> G[Backtest y<br>calibración]
     G --> H[Pick guardado<br>ANTES del partido]
     H --> I["/aciertos y CLV<br>contra el cierre"]
+    I -. cada semana .-> J{{Auto-mejora<br>¿gana el cambio?}}
+    J -. sí .-> C
 ```
 
 - Todo sale de una sola matriz de marcadores: quién gana, goles y ambos marcan nunca se contradicen.
 - Walk-forward: entrena con el pasado, predice lo siguiente y avanza; un mercado que no supera el control de falsos descubrimientos se marca como *ruido*.
 - El historial público no se recalcula: lo que se ve es lo que el modelo dijo antes de cada partido.
+- La auto-mejora solo cambia algo si gana con partidos que el modelo todavía no había visto; si no, todo queda como está.
 
 </details>
 
-<sub>~26 000 líneas de Python · ~9 000 de JavaScript sin frameworks · código privado · 🔗 <a href="https://instrumentoapp.com">instrumentoapp.com</a></sub>
+<details>
+<summary><b>⏰ Lo que la app hace sola cada día</b></summary>
+
+<br>
+
+| Hora (Lima) | Qué pasa |
+|---|---|
+| 🌙 1:00 · cada 7 días | **Auto-mejora** semanal del modelo: prueba, compara y aplica solo lo que gana |
+| 💾 4:00 | Respaldo diario de cuentas, picks e historial |
+| 🧮 5:00 | Reentrena con los resultados nuevos |
+| ☀️ Mañana | Arma las **combinadas del día** (del día, alta y bomba) y publica los picks en el canal de Telegram |
+| 📡 Durante el partido | Sigue cada partido en vivo cada 3 min: presión, goles y avisos push |
+| 🏁 Al terminar cada partido | Cierra los picks con el marcador y las estadísticas finales; en la noche el canal cuenta cómo salieron |
+| 📬 Lunes 10:00 | «Tu semana» a cada usuario y un reporte al dueño |
+
+<sub>Hilos de fondo con latido propio: si uno se cae o la memoria sube, llega un aviso por Telegram.</sub>
+
+</details>
+
+<sub>~31 000 líneas de Python · ~10 000 de JavaScript sin frameworks · código privado · 🔗 <a href="https://instrumentoapp.com">instrumentoapp.com</a></sub>
 
 <br>
 
@@ -163,15 +187,27 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
 
 ---
 
+<a name="-contacto"></a>
+## 📬 Contacto
+
+¿Un proyecto con datos, un modelo que hay que llevar a producción o una automatización? Escríbeme.
+
+<p>
+  <a href="mailto:wualters.dev@gmail.com"><img src="https://img.shields.io/badge/wualters.dev@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0F1420" alt="Correo"/></a>
+  <a href="https://instrumentoapp.com"><img src="https://img.shields.io/badge/instrumentoapp.com-C6F432?style=for-the-badge&logo=googlechrome&logoColor=0F1420&labelColor=0F1420" alt="Instrumento"/></a>
+</p>
+
+---
+
 <a name="-english"></a>
 <details>
 <summary><b>🇺🇸 English</b></summary>
 
 <br>
 
-**Python developer from Cusco, Peru.** I build complete products: from the statistical model to the server, the UI, the tests and the billing.
+**Python developer from Cusco, Peru.** I build complete products: from the statistical model to the server, the UI, the tests and the billing. Reach me at **[wualters.dev@gmail.com](mailto:wualters.dev@gmail.com)**.
 
-**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, measures closing-line value, and tracks calibration and yield for every saved pick — with a public, verifiable track record. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as an installable PWA, with a Free/Pro plan and CI running pytest + Playwright on every PR. **[Try it live →](https://instrumentoapp.com)**
+**⚽ Instrumento** — a football analytics web app that prices hundreds of markets per match with real statistical models (Dixon-Coles for goals, Negative Binomial for 28 match stats, a Gaussian copula for accumulators), backtests them against bookmaker odds, measures closing-line value, retrains itself daily and runs a weekly self-improvement loop that only ships changes that beat the current model on unseen matches, and tracks calibration and yield for every saved pick — with a public, verifiable track record. Built with Flask, pandas and SciPy, persisted in PostgreSQL (Neon), deployed on Render as an installable PWA, with a Free/Pro plan and CI running pytest + Playwright on every PR. **[Try it live →](https://instrumentoapp.com)**
 
 **🏇 Umapyoi AutoReroll** — a desktop bot that automates rerolling in Umamusume Global using OpenCV and Tesseract OCR to detect target SSR cards, with Discord webhook notifications and an English/Spanish UI.
 
@@ -180,9 +216,5 @@ Bot de escritorio que automatiza el reroll del juego: acepta términos, crea el 
 ---
 
 <div align="center">
-  <a href="https://github.com/WualterSDEV">
-    <img src="https://img.shields.io/badge/GitHub-WualterSDEV-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-  </a>
-  <br><br>
   <img src="https://komarev.com/ghpvc/?username=WualterSDEV&style=for-the-badge&color=FF5A1F" alt="Visitas al perfil"/>
 </div>
