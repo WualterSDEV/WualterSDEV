@@ -1,7 +1,7 @@
 """Genera las imágenes del perfil. Todas se guardan en el repo para que carguen
 siempre, también en la app de GitHub del celular (los badges externos a veces
-fallan). Estilo «Marcador» de Instrumento: fondo casi negro, lima solo en lo
-importante y títulos en Barlow Condensed.
+fallan). Identidad propia del perfil: fondo tinta, violeta y cian de acento,
+títulos en Space Grotesk y texto en Inter. El lima queda solo para Instrumento.
 
 Las tarjetas con texto se diseñan a 820 px de ancho y se guardan al doble: en
 un celular se ven a ~45% y la letra sigue legible.
@@ -37,9 +37,8 @@ IMG = pathlib.Path(__file__).resolve().parent
 REC = IMG / "recursos"
 CAPTURAS = pathlib.Path(os.environ.get("CAPTURAS") or IMG.parent / "capturas")
 FUENTES = [
-    ("Manrope", "200 800", "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2"),
-    ("Barlow", "700", "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2_3E.ttf"),
-    ("Barlow", "800", "https://fonts.gstatic.com/s/barlowcondensed/v13/HTxwL3I-JCGChYJ8VI-L6OO_au7B47b1_3E.ttf"),
+    ("Texto", "100 900", "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"),
+    ("Display", "300 700", "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2"),
     ("Mono", "200 800", "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8-qxjPQ.ttf"),
 ]
 
@@ -73,15 +72,17 @@ def _marca(nombre, alto=34):
     return f'<img src="data:image/svg+xml;base64,{_b64(svg.encode())}" style="height:{alto}px;width:{alto}px">'
 
 
-# los mismos colores de static/estilo.css de Instrumento
+# paleta propia del perfil; --inst es el lima de Instrumento, solo para lo suyo
 BASE = """
-:root{--bg:#0B0D0C;--card:#131614;--soft:#1A1E1B;--line:#242925;--line2:#303631;
-      --tx:#ECEFEA;--tx2:#C4C9C3;--mut:#979E98;--hi:#C6F432;--onhi:#0B1400;--visita:#8E9CF0;--neg:#FF8076}
+:root{--bg:#0A0B14;--card:#121427;--soft:#1A1D35;--line:#242845;--line2:#323759;
+      --tx:#EEF0FF;--tx2:#C4C8E4;--mut:#8F95BA;--hi:#9D8CFF;--cian:#3DD9EB;--inst:#C6F432;--neg:#FF8076;
+      --grad:linear-gradient(100deg,#9D8CFF,#3DD9EB)}
 *{margin:0;box-sizing:border-box}
-body{font-family:Manrope;background:var(--bg);color:var(--tx);position:relative}
-.d{font-family:Barlow;text-transform:uppercase}
+body{font-family:Texto;background:var(--bg);color:var(--tx);position:relative}
+.d{font-family:Display;letter-spacing:-.02em}
+.g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .glow{position:absolute;width:900px;height:900px;border-radius:50%;right:-380px;top:-520px;pointer-events:none;
-      background:radial-gradient(circle,rgba(198,244,50,.13),transparent 62%)}
+      background:radial-gradient(circle,rgba(157,140,255,.16),transparent 62%)}
 .grid{position:absolute;inset:0;pointer-events:none;
     background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:36px 36px;
@@ -89,11 +90,11 @@ body{font-family:Manrope;background:var(--bg);color:var(--tx);position:relative}
 .marco{position:relative;padding:40px 36px;overflow:hidden}
 .kicker{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800;letter-spacing:3px;color:var(--mut)}
 .kicker i.punto{width:9px;height:9px;border-radius:50%;background:var(--hi)}
-.titulo{font-family:Barlow;font-weight:800;text-transform:uppercase;font-size:56px;line-height:.95;margin-top:10px}
-.titulo b{color:var(--hi)}
+.titulo{font-family:Display;font-weight:700;letter-spacing:-.03em;font-size:52px;line-height:1;margin-top:10px}
+.titulo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .card{background:var(--card);border:1.5px solid var(--line);border-radius:20px}
 .ico{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-size:30px;flex:none;
-     background:rgba(198,244,50,.10);color:var(--hi);border:1.5px solid rgba(198,244,50,.28)}
+     background:rgba(157,140,255,.12);color:var(--hi);border:1.5px solid rgba(157,140,255,.32)}
 .chip{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:18px;padding:9px 15px;
       border-radius:999px;background:var(--card);border:1.5px solid var(--line2)}
 """
@@ -110,7 +111,7 @@ def banner_html():
     areas = "".join(f'<div class=card style="padding:12px 14px;border-radius:14px;display:flex;align-items:center;gap:10px">'
                     f'<i class="ph ph-{i}" style="font-size:24px;color:var(--hi)"></i>'
                     f'<span style="font-size:15px;font-weight:800">{t}</span></div>' for i, t in AREAS)
-    k, s, f, c = ("color:#C792EA", "color:#C6F432", "color:#82AAFF", "color:#6B736C")
+    k, s, f, c = ("color:#C792EA", "color:#7EE0F0", "color:#82AAFF", "color:#6B7194")
     codigo = f"""<span style="{k}">class</span> <span style="{f}">Wualter</span>:
     base  = <span style="{s}">"Cusco, Perú"</span>
     hace  = [<span style="{s}">"datos"</span>, <span style="{s}">"web"</span>, <span style="{s}">"bots"</span>]
@@ -121,7 +122,7 @@ def banner_html():
 <div class=glow style="right:-300px;top:-460px"></div><div class=grid></div>
 <div style="position:relative">
   <div class=kicker><i class=punto></i>DESARROLLADOR PYTHON · CUSCO, PERÚ</div>
-  <div class=d style="font-size:108px;font-weight:800;letter-spacing:1px;line-height:.9;margin-top:16px">Wualter<span style="color:var(--hi)">S</span></div>
+  <div class=d style="font-size:100px;font-weight:700;letter-spacing:-.04em;line-height:.95;margin-top:14px">Wualter<span class=g>S</span></div>
   <div style="font-size:24px;font-weight:700;color:var(--tx2);margin-top:14px;max-width:440px;line-height:1.3">
     Construyo productos de datos de punta a punta</div>
   <div style="display:flex;gap:10px;margin-top:30px">{areas}</div>
@@ -131,13 +132,13 @@ def banner_html():
   <div style="display:flex;align-items:center;gap:6px;padding:11px 14px;border-bottom:1.5px solid var(--line);background:var(--soft)">
     <i style="width:10px;height:10px;border-radius:50%;background:#FF8076"></i>
     <i style="width:10px;height:10px;border-radius:50%;background:#F2C94C"></i>
-    <i style="width:10px;height:10px;border-radius:50%;background:var(--hi)"></i>
+    <i style="width:10px;height:10px;border-radius:50%;background:#3DD68C"></i>
     <span style="font-family:Mono;font-size:12px;color:var(--mut);margin-left:8px">wualter.py</span></div>
   <pre style="font-family:Mono;font-size:12.5px;line-height:1.6;padding:14px 16px;color:var(--tx);white-space:pre">{codigo}</pre>
 </div>
 <div class=card style="position:absolute;right:66px;top:368px;width:240px;padding:12px 16px;transform:rotate(-2deg);
      box-shadow:0 30px 60px rgba(0,0,0,.55);display:flex;align-items:center;gap:10px">
-  <i style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--hi);box-shadow:0 0 12px var(--hi)"></i>
+  <i style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--inst);box-shadow:0 0 12px var(--inst)"></i>
   <div><div style="font-size:11px;font-weight:800;letter-spacing:2px;color:var(--mut)">EN PRODUCCIÓN</div>
   <div style="font-size:15px;font-weight:800;margin-top:2px">instrumentoapp.com</div></div>
 </div>
@@ -178,8 +179,8 @@ HABILIDADES = [
 
 def habilidades_html():
     def etiqueta(p):
-        color, fondo = (("var(--hi)", "rgba(198,244,50,.10)") if p == "Instrumento"
-                        else ("var(--visita)", "rgba(142,156,240,.12)"))
+        color, fondo = (("var(--inst)", "rgba(198,244,50,.10)") if p == "Instrumento"
+                        else ("var(--cian)", "rgba(61,217,235,.12)"))
         return (f'<span style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:{color};background:{fondo};'
                 f'padding:4px 9px;border-radius:999px">{p.upper()}</span>')
     tarjetas = "".join(
@@ -205,7 +206,7 @@ FLUJO = [
 
 def flujo_html():
     pasos = "".join(f"""<div style="display:flex;gap:20px;position:relative;padding-bottom:{0 if n == len(FLUJO) else 22}px">
-  {'' if n == len(FLUJO) else '<div style="position:absolute;left:26px;top:58px;bottom:0;width:2px;background:linear-gradient(var(--hi),var(--line2))"></div>'}
+  {'' if n == len(FLUJO) else '<div style="position:absolute;left:26px;top:58px;bottom:0;width:2px;background:linear-gradient(var(--hi),var(--cian))"></div>'}
   <div class=ico style="position:relative"><i class="ph ph-{i}"></i></div>
   <div style="padding-top:4px"><div style="display:flex;align-items:baseline;gap:10px">
       <span class=d style="font-size:16px;font-weight:700;color:var(--mut)">0{n}</span>
@@ -229,7 +230,7 @@ STACK = [
 
 def stack_html():
     grupos = "".join(
-        f'<div style="margin-top:22px"><div style="font-size:14px;font-weight:800;letter-spacing:2.5px;color:var(--hi)">'
+        f'<div style="margin-top:22px"><div style="font-size:14px;font-weight:800;letter-spacing:2.5px;color:var(--cian)">'
         f'{g.upper()}</div><div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">'
         + "".join(f'<span class=chip>{_marca(m, 22) if m else ""}{t}</span>' for m, t in items) + "</div></div>"
         for g, items in STACK)
@@ -244,7 +245,7 @@ def _chips(lista, alto=18):
 
 def proyectos_html():
     cifras = "".join(f'<div style="flex:1;background:var(--soft);border-radius:12px;padding:10px 12px">'
-                     f'<div class=d style="font-size:30px;font-weight:800;line-height:1;color:var(--hi)">{n}</div>'
+                     f'<div class=d style="font-size:30px;font-weight:700;line-height:1;color:var(--inst)">{n}</div>'
                      f'<div style="font-size:12px;font-weight:700;color:var(--mut);margin-top:4px;line-height:1.3">{t}</div></div>'
                      for n, t in (("300+", "PRs en<br>6 semanas"), ("~770", "pruebas por<br>cambio"),
                                   ("28", "ligas y<br>copas")))
@@ -266,9 +267,9 @@ def proyectos_html():
         "Pronósticos de fútbol con un modelo estadístico real. Gratis, en PC y celular, y publica cuánto acierta.",
         f'<div style="display:flex;gap:8px;margin-top:16px">{cifras}</div>',
         _chips([("python", "Python"), ("flask", "Flask"), ("postgresql", "PostgreSQL"), ("scipy", "SciPy"), ("javascript", "JS")]),
-        '<span style="color:var(--hi)">●</span> En producción · instrumentoapp.com')
+        '<span style="color:var(--inst)">●</span> En producción · instrumentoapp.com')
     umapyoi = tarjeta(
-        "🏇", "#8E9CF0", "rgba(142,156,240,.12)", "AUTOMATIZACIÓN · ESCRITORIO", "Umapyoi AutoReroll",
+        "🏇", "#3DD9EB", "rgba(61,217,235,.12)", "AUTOMATIZACIÓN · ESCRITORIO", "Umapyoi AutoReroll",
         "Bot que hace solo el reroll de Umamusume Global: crea el perfil, reclama recompensas, tira el gacha "
         "y detecta las cartas SSR con visión por computadora. Avisa por Discord.",
         "",
@@ -324,10 +325,10 @@ def pantallas_html():
 def botones(b, css):
     pg = b.new_page(viewport={"width": 900, "height": 120}, device_scale_factor=2)
     for nombre, texto, principal in BOTONES:
-        estilo = ("background:#C6F432;color:#0B1400" if principal else
-                  "background:#131614;color:#ECEFEA;box-shadow:inset 0 0 0 2px #303631")
+        estilo = ("background:linear-gradient(100deg,#9D8CFF,#3DD9EB);color:#0A0B14" if principal else
+                  "background:#121427;color:#EEF0FF;box-shadow:inset 0 0 0 2px #323759")
         pg.set_content(f"<html><head><meta charset=utf-8><style>{css}*{{margin:0}}body{{background:transparent}}"
-                       f"b{{display:inline-block;font:800 19px Manrope;letter-spacing:.3px;padding:13px 26px;"
+                       f"b{{display:inline-block;font:700 19px Texto;letter-spacing:.3px;padding:13px 26px;"
                        f"border-radius:999px;{estilo}}}</style></head>"
                        f"<body><b id=b>{texto}</b></body></html>")
         pg.evaluate("document.fonts.ready")
