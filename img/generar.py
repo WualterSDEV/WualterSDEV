@@ -4,6 +4,8 @@ siempre, también en la app de GitHub del celular):
   img/banner.gif   encabezado con el texto que se escribe solo
   img/codigo.png   tarjeta de código «class WualterS»
   img/umapyoi.png  tarjeta del proyecto Umapyoi AutoReroll
+  img/stack.png    tecnologías por grupo
+  img/btn-*.png    botones (en vez de badges externos, que a veces no cargan)
 
 Uso: pip install playwright pillow && python img/generar.py
 """
@@ -103,6 +105,50 @@ UMAPYOI = """<div class=g1 style="background:radial-gradient(circle,rgba(124,92,
   </div>
 </div>"""
 
+# nombre, texto, fondo, color del texto
+BOTONES = [
+    ("proyectos", "🧭 Proyectos", "#FF5A1F", "#0B0F17"),
+    ("stack", "🛠️ Stack", "#232B3D", "#E6EAF2"),
+    ("contacto", "📬 Contacto", "#C6F432", "#0B0F17"),
+    ("english", "🇺🇸 English", "#232B3D", "#E6EAF2"),
+    ("probar", "▶ Probar la app", "#FF5A1F", "#0B0F17"),
+    ("aciertos", "✅ Aciertos públicos", "#C6F432", "#0B0F17"),
+    ("correo", "✉️ wualters.dev@gmail.com", "#FF5A1F", "#0B0F17"),
+    ("web", "🌐 instrumentoapp.com", "#232B3D", "#E6EAF2"),
+]
+
+GRUPOS = [
+    ("LENGUAJES", ["🐍 Python", "JavaScript", "HTML / CSS", "SQL"]),
+    ("BACKEND Y DATOS", ["Flask", "PostgreSQL (Neon)", "SQLite", "pandas", "NumPy", "SciPy"]),
+    ("MODELOS", ["Dixon-Coles", "Binomial Negativa", "Cópula gaussiana", "Kelly fraccionado"]),
+    ("AUTOMATIZACIÓN", ["OpenCV", "Tesseract OCR", "Selenium", "Discord"]),
+    ("DEPLOY Y CALIDAD", ["Render", "GitHub Actions", "pytest", "Playwright", "ruff", "PWA"]),
+]
+
+
+def stack_html():
+    filas = "".join(
+        f'<div style="display:flex;align-items:center;gap:22px;margin:14px 0">'
+        f'<div style="width:250px;font-size:19px;font-weight:700;letter-spacing:3px;color:#FF8A5B">{t}</div>'
+        f'<div style="display:flex;flex-wrap:wrap;gap:10px;font-size:21px">'
+        + "".join(f"<span class=chip>{c}</span>" for c in chips) + "</div></div>"
+        for t, chips in GRUPOS)
+    return (f'<div class=g1 style="left:-420px;top:-560px"></div><div class=g2></div><div class=grid></div>'
+            f'<div style="position:absolute;inset:0;padding:40px 60px">{filas}</div>')
+
+
+def botones(b, css):
+    pg = b.new_page(viewport={"width": 900, "height": 120}, device_scale_factor=2)
+    for nombre, texto, fondo, color in BOTONES:
+        pg.set_content(f"<html><head><meta charset=utf-8><style>{css}*{{margin:0}}body{{background:transparent}}"
+                       f"b{{display:inline-block;font:800 19px Manrope;letter-spacing:1px;padding:13px 24px;"
+                       f"border-radius:999px;background:{fondo};color:{color}}}</style></head>"
+                       f"<body><b id=b>{texto}</b></body></html>")
+        pg.evaluate("document.fonts.ready")
+        pg.wait_for_timeout(150)
+        pg.locator("#b").screenshot(path=str(IMG / f"btn-{nombre}.png"), omit_background=True)
+    pg.close()
+
 
 def _pagina(b, css, cuerpo, ancho, alto):
     pg = b.new_page(viewport={"width": ancho, "height": alto})
@@ -144,7 +190,9 @@ def main():
     with sync_playwright() as p:
         b = p.chromium.launch()
         banner(b, css)
-        for nombre, cuerpo, ancho, alto in (("codigo", CODIGO, 1280, 540), ("umapyoi", UMAPYOI, 1600, 420)):
+        botones(b, css)
+        for nombre, cuerpo, ancho, alto in (("codigo", CODIGO, 1280, 540), ("umapyoi", UMAPYOI, 1600, 420),
+                                            ("stack", stack_html(), 1280, 410)):
             pg = _pagina(b, css, cuerpo, ancho, alto)
             pg.screenshot(path=str(IMG / f"{nombre}.png"))
             pg.close()
